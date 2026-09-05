@@ -1,4 +1,4 @@
-# Élio — Treino V9
+# Élio — Treino V10 · Timer + Som
 
 ## Estrutura
 - **Registo original**: mantém o treino real e o histórico de cargas que já existia.
