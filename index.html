@@ -6,7 +6,7 @@
 <link rel="manifest" href="manifest.json"><title>Élio — Treino V11 · Timer</title>
 <style>
 :root{--bg:#f5f7fa;--panel:#fff;--ink:#17202a;--muted:#687385;--line:#dbe1e8;--dark:#111827;--accent:#17233a;--ok:#dff2e5;--warn:#fff2cf;--bad:#ffe0e0;--blue:#e3ecff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea{font:inherit}button{border:0;border-radius:13px;padding:11px 14px;font-weight:800;cursor:pointer}.wrap{max-width:900px;margin:auto;padding:14px 14px 90px}.top{position:sticky;top:0;z-index:10;background:rgba(245,247,250,.95);backdrop-filter:blur(12px);padding:8px 0 12px}.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand h1{margin:0;font-size:24px}.sub{font-size:12px;color:var(--muted);margin-top:2px}.tabs{display:flex;gap:7px;overflow:auto;padding:10px 0}.tab{white-space:nowrap;background:#e9edf2;color:#26323f}.tab.active{background:var(--dark);color:#fff}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:12px}.hero{background:var(--dark);color:#fff;border-radius:22px;padding:18px}.hero h2{margin:0 0 5px;font-size:22px}.muted{color:var(--muted);font-size:13px}.hero .muted{color:#cbd5e1}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}.metric{background:#eef1f5;border-radius:15px;padding:11px}.metric b{display:block;font-size:19px;margin-top:3px}.days{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.day{background:#edf0f4;text-align:left;min-height:62px}.day.active{background:var(--dark);color:#fff}.sectionTitle{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:12px}.sectionTitle h2{margin:0;font-size:21px}.pill{display:inline-block;background:#eef1f5;border-radius:99px;padding:6px 9px;font-size:11px;font-weight:800}.exercise{border-left:5px solid #cbd5e1}.exercise.done{border-left-color:#4d8b5a;background:#f7fcf8}.exerciseHead{display:flex;justify-content:space-between;gap:10px}.exercise h3{margin:0;font-size:17px}.exercise .eng{font-size:12px;color:var(--muted);margin-top:2px}.focus{font-size:13px;margin:7px 0;color:#3d4b5c}.ref{background:#eef1f5;border-radius:12px;padding:8px;font-size:12px;font-weight:800;white-space:nowrap;height:max-content}.sets{display:grid;gap:7px;margin-top:12px}.set{display:grid;grid-template-columns:34px 1fr 1fr 1fr 42px;gap:6px;align-items:end}.setno{font-weight:900;text-align:center;padding-bottom:12px}.field label{display:block;font-size:10px;color:var(--muted)}input,textarea{width:100%;border:1px solid #cbd3dc;border-radius:10px;padding:9px;background:#fff;color:var(--ink)}input{min-height:42px}.mini{min-height:42px;padding:7px 5px;background:#e9edf2;color:#26323f}.mini.done{background:#dff2e5}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.primary{background:var(--dark);color:#fff}.secondary{background:#e9edf2;color:#26323f}.rest{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);margin-top:12px;padding-top:11px}.timer{font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}.note{margin-top:9px}.note textarea{min-height:58px}.progress{margin-top:10px;padding:9px 10px;border-radius:12px;background:#f5f0d9;font-size:12px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef1f5;border-radius:14px;padding:11px;text-align:center}.stat b{display:block;font-size:20px}.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:9px 12px;z-index:20}.bottomIn{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}.search{margin-bottom:12px}.historyItem{padding:10px 0;border-bottom:1px solid var(--line)}.libraryGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.libraryItem{padding:12px;background:#f7f8fa;border-radius:14px}.empty{padding:25px;text-align:center;color:var(--muted)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea{font:inherit}button{border:0;border-radius:13px;padding:11px 14px;font-weight:800;cursor:pointer}.wrap{max-width:900px;margin:auto;padding:14px 14px 90px}.top{position:sticky;top:0;z-index:10;background:rgba(245,247,250,.95);backdrop-filter:blur(12px);padding:8px 0 12px}.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand h1{margin:0;font-size:24px}.sub{font-size:12px;color:var(--muted);margin-top:2px}.tabs{display:flex;gap:7px;overflow:auto;padding:10px 0}.tab{white-space:nowrap;background:#e9edf2;color:#26323f}.tab.active{background:var(--dark);color:#fff}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:12px}.hero{background:var(--dark);color:#fff;border-radius:22px;padding:18px}.hero h2{margin:0 0 5px;font-size:22px}.muted{color:var(--muted);font-size:13px}.hero .muted{color:#cbd5e1}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}.metric{background:#eef1f5;border-radius:15px;padding:11px}.metric b{display:block;font-size:19px;margin-top:3px}.days{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.day{background:#edf0f4;text-align:left;min-height:62px}.day.active{background:var(--dark);color:#fff}.sectionTitle{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:12px}.sectionTitle h2{margin:0;font-size:21px}.pill{display:inline-block;background:#eef1f5;border-radius:99px;padding:6px 9px;font-size:11px;font-weight:800}.exercise{border-left:5px solid #cbd5e1}.exercise.done{border-left-color:#4d8b5a;background:#f7fcf8}.exerciseHead{display:flex;justify-content:space-between;gap:10px}.exercise h3{margin:0;font-size:17px}.exercise .eng{font-size:12px;color:var(--muted);margin-top:2px}.focus{font-size:13px;margin:7px 0;color:#3d4b5c}.ref{background:#eef1f5;border-radius:12px;padding:8px;font-size:12px;font-weight:800;white-space:nowrap;height:max-content}.sets{display:grid;gap:7px;margin-top:12px}.set{display:grid;grid-template-columns:34px 1fr 1fr 1fr 42px;gap:6px;align-items:end}.setno{font-weight:900;text-align:center;padding-bottom:12px}.field label{display:block;font-size:10px;color:var(--muted)}input,textarea{width:100%;border:1px solid #cbd3dc;border-radius:10px;padding:9px;background:#fff;color:var(--ink)}input{min-height:42px}.mini{min-height:42px;padding:7px 5px;background:#e9edf2;color:#26323f}.mini.done{background:#dff2e5}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.primary{background:var(--dark);color:#fff}.secondary{background:#e9edf2;color:#26323f}.rest{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);margin-top:12px;padding-top:11px}.timer{font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}.note{margin-top:9px}.note textarea{min-height:58px}.progress{margin-top:10px;padding:9px 10px;border-radius:12px;background:#f5f0d9;font-size:12px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef1f5;border-radius:14px;padding:11px;text-align:center}.stat b{display:block;font-size:20px}.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:9px 12px;z-index:20}.bottomIn{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}.search{margin-bottom:12px}.historyItem{padding:10px 0;border-bottom:1px solid var(--line)}.libraryGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.libraryItem{padding:12px;background:#f7f8fa;border-radius:14px}.empty{padding:25px;text-align:center;color:var(--muted)}.progressBox{margin-top:10px;padding:11px 12px;border-radius:14px;background:#f5f0d9;border:1px solid #e2d9ad;font-size:12px}.progressBox b{font-size:13px}.progressRow{margin-top:5px}.historySelect{display:flex;gap:10px;align-items:flex-start}.historySelect input{width:20px;min-height:20px;margin-top:2px}.historyControls{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.danger{background:#7f1d1d;color:#fff}.checkAll{width:20px;min-height:20px}
 @media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr)}.days{grid-template-columns:repeat(2,1fr)}.set{grid-template-columns:25px 1fr 1fr 1fr 40px}.libraryGrid{grid-template-columns:1fr}.exerciseHead{display:block}.ref{display:inline-block;margin-top:8px}.wrap{padding-left:10px;padding-right:10px}}
 
 /* ===== ÉLIO V7.3 — visual upgrade ===== */
@@ -49,10 +49,8 @@ body{background:radial-gradient(circle at 10% 0%,#e8e7ff 0,#eef2f7 28%,#f7f9fc 1
 @media(max-width:760px){.plan6Grid,.altGrid{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
-<div id="progressionSuggestions"></div>
-<div id="restTimer" aria-live="polite"></div><div class="wrap">
-<div class="top"><div class="brand"><div><h1>Élio — Treino</h1><div class="sub">Registo · Progressão · Biblioteca · Corpo · Histórico</div></div><button class="secondary" onclick="clearActiveDay()"">Limpar dia</button></div><nav class="tabs" id="tabs"></nav></div>
+<body><div id="restTimer" aria-live="polite"></div><div class="wrap">
+<div class="top"><div class="brand"><div><h1>Élio — Treino</h1><div class="sub">Registo · Progressão · Biblioteca · Corpo · Histórico</div></div><button class="secondary" onclick="clearDay()">Limpar dia</button></div><nav class="tabs" id="tabs"></nav></div>
 <main id="app"></main></div><div class="bottom"><div class="bottomIn"><div><div class="muted">Treino atual</div><b id="bottomDay">—</b></div><button class="primary" onclick="finishWorkout()">✓ Treino concluído</button></div></div>
 <script>
 
@@ -222,22 +220,10 @@ const PLAN6={
 ["Prancha lateral","Side Plank","Core — oblíquos / estabilidade",2,"20–40s"]]}
 };
 const KEY='elio-treino-v3';let state=JSON.parse(localStorage.getItem(KEY)||'{}');if(!Object.keys(state).length){try{const oldState=JSON.parse(localStorage.getItem('elio-treino-v2')||'{}');if(oldState&&Object.keys(oldState).length){state=oldState;localStorage.setItem(KEY,JSON.stringify(state));}}catch(e){}}state.day=state.day||'Segunda-feira';state.logs=state.logs||{};state.history=state.history||[];state.body=state.body||[];let tab='Treino 6×';let timer=null,remaining=0;
-state.progressionSuggestions=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}function key(d,i){return d+'-'+i}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function refText(x){if(Array.isArray(x))return x.join(' → ');return String(x)}function target(ex,s){return Array.isArray(ex[5])?ex[5][s-1]:ex[5]}
 function renderTabs(){document.getElementById('tabs').innerHTML=[['Resumo','Resumo'],['Treino','Registo original'],['Plano 6×','Plano 6×'],['Treino 6×','🏋️ Treino ATIVO 6×'],['Análise muscular','Análise muscular'],['Biblioteca','Biblioteca'],['Corpo','Corpo'],['Histórico','Histórico']].map(([v,l])=>`<button class="tab ${tab===v?'active':''}" onclick="setTab('${v}')">${l}</button>`).join('')}
 function setTab(t){tab=t;render()}
-
-function renderProgressionSuggestions(){
-  let el=document.getElementById('progressionSuggestions');
-  if(!el) return;
-  let arr=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
-  if(!arr.length){el.innerHTML='';return;}
-  el.innerHTML='<div class="card"><b>💡 Progressão para o próximo treino</b><div style="margin-top:8px">'+
-    arr.map(x=>'<div style="padding:6px 0;border-top:1px solid #ddd"><b>'+x.name+'</b><br>'+progressionLabel(x.suggestion)+'</div>').join('')+
-    '</div></div>';
-}
-
 function render(){renderTabs();let a=document.getElementById('app');if(tab==='Resumo')a.innerHTML=summary();else if(tab==='Treino')a.innerHTML=workout();else if(tab==='Plano 6×')a.innerHTML=plan6Page();else if(tab==='Treino 6×')a.innerHTML=plan6Workout();else if(tab==='Análise muscular')a.innerHTML=muscleAnalysis();else if(tab==='Biblioteca')a.innerHTML=library();else if(tab==='Corpo')a.innerHTML=body();else a.innerHTML=history();document.getElementById('bottomDay').textContent=state.day;bind()}
 function summary(){let p=PLAN6[state.day],plogs=p.items.map((_,i)=>state.logs['p6-'+key(state.day,i)]||{}),done=plogs.filter(x=>x.done).length,sets=plogs.reduce((n,x)=>n+(x.sets?x.sets.filter(s=>s.done).length:0),0);let a=calcMuscles();let attention=a.filter(x=>x.status!=='good').length;return `<section class="hero"><h2>Élio — Treino</h2><div class="muted"><b>Treino ATIVO 6×</b> — este é o programa que deves seguir. O Registo original permanece apenas como histórico/base de comparação.</div><div style="margin-top:14px"><button class="primary" onclick="setTab('Treino 6×')">🏋️ Abrir treino ativo</button> <button class="secondary" onclick="setTab('Plano 6×')">🧭 Ver estrutura do Plano 6×</button></div></section><div class="grid"><div class="metric">Hoje<b>${esc(state.day)}</b></div><div class="metric">Sessão<b>${esc(p.label)}</b></div><div class="metric">Exercícios<b>${p.items.length}</b></div><div class="metric">Séries feitas<b>${sets}</b></div></div><section class="panel"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(p.label)}</h2><div class="muted">${esc(p.focus)}</div></div><button class="primary" onclick="setTab('Treino 6×')">Abrir treino ativo</button></div><div class="days">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div></section><section class="panel"><div class="sectionTitle"><div><h2>Estado muscular</h2><div class="muted">${attention?attention+' zonas merecem atenção.':'A distribuição está dentro da faixa de referência definida.'}</div></div></div><div class="muscleGrid">${a.slice(0,6).map(m=>miniMuscleCard(m)).join('')}</div></section>`}
 const MUSCLE_GROUPS=[
@@ -531,7 +517,7 @@ function muscleAnalysis(){
  return `<section class="analysisHero"><h2>🧬 Análise muscular semanal — V7.5</h2><div style="opacity:.9">A V7 acrescenta a dimensão que faltava: não basta saber quanto volume existe; verificamos também <b>em que porções</b>, <b>em que dias</b> e <b>com que sobreposição</b> esse volume aparece.</div><div class="analysisKpis"><div class="analysisKpi">Séries base<b>${baseSets}</b></div><div class="analysisKpi">Porções com estímulo<b>${covered}/${totalParts}</b></div><div class="analysisKpi">Atenção baixa<b>${low}</b></div><div class="analysisKpi">Volume elevado<b>${high}</b></div></div><div class="legend"><span>🟢 dentro da faixa específica</span><span>🟡 abaixo da faixa</span><span>🔴 acima da faixa</span><span>Direta = 100% · secundária = 50% · terciária = 25%</span></div></section>${frequencyDashboard(rows)}${optimizedPlan6Panel()}${alternativesByPortionPanel()}<section class="panel"><div class="sectionTitle"><div><h2>2. Cobertura por músculo e porção</h2><div class="muted">A primeira pergunta: todas as porções relevantes recebem estímulo suficiente?</div></div></div><div class="muscleGrid">${rows.map(miniMuscleCard).join('')}</div></section>${weeklyDistributionPanel(rows)}${redistributionPanel(rows)}${auditHighlights(rows)}${exerciseAuditPanel()}${recommendationPanel(recs)}${evidencePanel()}<section class="panel"><div class="sectionTitle"><div><h2>📚 Como a V7.5 calcula</h2></div></div><div class="noteBox"><b>1. Séries reais:</b> o programa continua com as séries-base efetivamente registadas; a análise não altera o treino.<br><b>2. Cobertura:</b> cada grupo é dividido em porções anatómicas para evitar que “volume de músculo” esconda uma porção pouco trabalhada.<br><b>3. Frequência:</b> a V7.5 identifica os dias em que cada porção recebe estímulo. A divisão atual pode não dar 2 exposições a todos os grupos, apesar de existirem 6 dias de treino.<br><b>4. Sobreposição:</b> um exercício pode contribuir para mais do que uma porção. A ponderação 100% / 50% / 25% é uma estimativa de programação, não uma medição fisiológica direta.<br><b>5. Decisão:</b> primeiro corrigimos a distribuição e a redundância; só depois, se necessário, adicionamos ou retiramos exercícios. Nada é alterado automaticamente.<br><b>Nota:</b> esta análise é uma ferramenta de programação baseada na literatura e no teu registo, não uma medição EMG nem um diagnóstico clínico.</div></section>`;
 }
 function plan6Workout(){let d=PLAN6[state.day];return `<section class="panel plan6Notice"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(d.label)}</h2><div class="muted">${esc(d.focus)}</div></div><span class="pill">🏋️ Treino ATIVO 6×</span></div><div class="days" style="margin-top:12px">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div><div class="noteBox"><b>Como usar:</b> este é o treino que deves executar. Regista aqui carga, repetições, RPE e conclusão. O histórico do Treino ATIVO 6× fica separado do Registo original.</div></section>${d.items.map((ex,i)=>plan6ExerciseCard(ex,i)).join('')}`}
-function plan6ExerciseCard(ex,i){let k='p6-'+key(state.day,i),l=state.logs[k]||{},n=ex[3],sets=Array.from({length:n},(_,j)=>l.sets?.[j]||{load:'',reps:ex[4].split('–')[0],rpe:'',pain:'',done:false});return `<article class="card exercise ${l.done?'done':''}"><div class="exerciseHead"><div><h3>${esc(ex[0])}</h3><div class="eng">${esc(ex[1])}</div><div class="focus"><b>Porção:</b> ${esc(ex[2])} · <b>Objetivo:</b> ${esc(ex[4])} reps</div></div><div class="ref">${n} séries</div></div><div class="sets">${sets.map((s,j)=>`<div class="set"><div class="setno">${j+1}</div><div class="field"><label>Carga</label><input inputmode="decimal" value="${esc(s.load)}" onchange="setP6Set(${i},${j},'load',this.value)" /></div><div class="field"><label>Reps</label><input inputmode="numeric" value="${esc(s.reps)}" onchange="setP6Set(${i},${j},'reps',this.value)" /></div><div class="field"><label>RPE</label><input inputmode="numeric" placeholder="0–10" value="${esc(s.rpe||'')}" onchange="setP6Set(${i},${j},'rpe',this.value)" /></div><button class="mini ${s.done?'done':''}" onclick="toggleP6Set(${i},${j})">✓</button></div>`).join('')}</div><div class="actions"><button class="secondary" onclick="startRest(${getPlan6Rest(ex)})">⏱ ${getPlan6Rest(ex)}s</button><a class="primary" style="text-decoration:none;padding:11px 14px;border-radius:13px;font-weight:800" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex[1]+' exercise technique')}">Vídeo</a><button class="secondary" onclick="toggleP6Exercise(${i})">${l.done?'Desmarcar':'Marcar exercício concluído'}</button></div><div class="note"><textarea placeholder="Observações" onchange="setP6Log(${i},'notes',this.value)">${esc(l.notes||'')}</textarea></div></article>`}
+function plan6ExerciseCard(ex,i){let k='p6-'+key(state.day,i),l=state.logs[k]||{},n=ex[3],sets=Array.from({length:n},(_,j)=>l.sets?.[j]||{load:'',reps:ex[4].split('–')[0],rpe:'',done:false});let ps=getProgressionSuggestion(ex);let hasCurrent=sets.some(s=>s.load!==''||s.rpe!=='');return `<article class="card exercise ${l.done?'done':''}"><div class="exerciseHead"><div><h3>${esc(ex[0])}</h3><div class="eng">${esc(ex[1])}</div><div class="focus"><b>Porção:</b> ${esc(ex[2])} · <b>Objetivo:</b> ${esc(ex[4])} reps</div></div><div class="ref">${n} séries</div></div>${ps&&!hasCurrent?`<div class="progressBox"><b>💡 Progressão para esta sessão</b><div class="progressRow">Último treino: <b>${esc(ps.lastText)}</b></div><div class="progressRow">Sugestão: <b>${esc(ps.suggestion)}</b></div><div class="muted" style="margin-top:4px">${esc(ps.reason)}</div></div>`:''}<div class="sets">${sets.map((s,j)=>`<div class="set"><div class="setno">${j+1}</div><div class="field"><label>Carga</label><input inputmode="decimal" value="${esc(s.load)}" onchange="setP6Set(${i},${j},'load',this.value)" /></div><div class="field"><label>Reps</label><input inputmode="numeric" value="${esc(s.reps)}" onchange="setP6Set(${i},${j},'reps',this.value)" /></div><div class="field"><label>RPE</label><input inputmode="numeric" placeholder="0–10" value="${esc(s.rpe||'')}" onchange="setP6Set(${i},${j},'rpe',this.value)" /></div><button class="mini ${s.done?'done':''}" onclick="toggleP6Set(${i},${j})">✓</button></div>`).join('')}</div><div class="actions"><button class="secondary" onclick="startRest(${getPlan6Rest(ex)})">⏱ ${getPlan6Rest(ex)}s</button><a class="primary" style="text-decoration:none;padding:11px 14px;border-radius:13px;font-weight:800" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex[1]+' exercise technique')}">Vídeo</a><button class="secondary" onclick="toggleP6Exercise(${i})">${l.done?'Desmarcar':'Marcar exercício concluído'}</button></div><div class="note"><textarea placeholder="Observações" onchange="setP6Log(${i},'notes',this.value)">${esc(l.notes||'')}</textarea></div></article>`}
 function getPlan6Rest(ex){return /agachamento|prensa|peso morto|supino|press de peito|barra fixa/i.test(ex[0])?150:90}
 function p6key(i){return 'p6-'+key(state.day,i)}
 function setP6Set(i,j,f,v){let k=p6key(i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j][f]=v;state.logs[k]=l;save()}
@@ -559,79 +545,89 @@ function pauseRest(){if(timer===null||remaining<=0)return;clearInterval(timer);t
 function resumeRest(){if(timer!==null||remaining<=0)return;timer=setInterval(restTick,1000);renderRestTimer()}
 function stopRest(){if(timer)clearInterval(timer);if(restDoneTimeout)clearTimeout(restDoneTimeout);timer=null;remaining=0;renderRestTimer()}
 function changeDay(d){state.day=d;save();tab='Treino';render()}
-function changePlan6Day(d){state.day=d;save();tab='Treino 6×';render()}function clearDay(){if(confirm(tab==='Treino 6×'?'Limpar os registos do Treino ATIVO 6× deste dia?':'Limpar os registos do Registo original deste dia?')){let prefix=tab==='Treino 6×'?'p6-'+state.day+'-':state.day+'-';Object.keys(state.logs).filter(k=>k.startsWith(prefix)).forEach(k=>delete state.logs[k]);save();render()}}
+function changePlan6Day(d){state.day=d;save();tab='Treino 6×';render()}
 
-function getLastCompletedExerciseLog(exName){
+function getProgressionSuggestion(ex){
   let hist=Array.isArray(state.history)?state.history:[];
   for(let h of hist){
     if(h.type!=='Treino ATIVO 6×') continue;
-    for(let item of (h.items||[])){
-      if(item.name===exName && item.log) return item.log;
-    }
+    let item=(h.items||[]).find(x=>x.name===ex[0]);
+    if(!item||!item.log) continue;
+    let sets=item.log.sets||[];
+    if(!sets.length) continue;
+    let valid=sets.filter(s=>s&&String(s.load??'')!==''&&Number(s.reps)>0&&Number(s.rpe)>=0);
+    if(valid.length!==sets.length) continue;
+    let range=String(ex[4]||'').match(/\d+/g)||[];
+    let min=Number(range[0]||0),max=Number(range[1]||min);
+    let top=valid.every(s=>Number(s.reps)>=max);
+    let minOk=valid.every(s=>Number(s.reps)>=min);
+    let rpeHigh=valid.some(s=>Number(s.rpe)>=9);
+    let weights=valid.map(s=>Number(String(s.load).replace(',','.'))).filter(Number.isFinite);
+    if(!weights.length) continue;
+    let w=Math.max(...weights);
+    let inc=w<50?2.5:5;
+    let suggestion=w,reason='Progressão ainda não consolidada.';
+    if(top&& !rpeHigh){suggestion=w+inc;reason='Atingiste o topo da faixa de repetições com RPE ≤8 em todas as séries.';}
+    else if(rpeHigh){suggestion=w;reason='Pelo menos uma série teve RPE ≥9; a carga deve ser mantida.';}
+    else if(!minOk){suggestion=w;reason='Não foi atingido o mínimo da faixa de repetições; a carga deve ser mantida.';}
+    let lastText=valid.map(s=>`${s.load} kg × ${s.reps} (RPE ${s.rpe})`).join(' · ');
+    return {suggestion:(suggestion===w?`${suggestion} kg — manter`:`${suggestion} kg — aumentar`),lastText,reason};
   }
   return null;
 }
-function applyProgressionToActiveDay(){
-  if(tab!=='Treino 6×') return;
-  let d=PLAN6[state.day];
-  if(!d||!Array.isArray(d.items)) return;
-  let suggestions=[];
-  d.items.forEach((e,i)=>{
-    let s=getProgressionSuggestion(e);
-    if(s){
-      suggestions.push({name:e[0],suggestion:s});
-    }
-  });
-  state.progressionSuggestions=suggestions;
-  save();
+function clearDay(){
+  let question=tab==='Treino 6×'?'Limpar os registos do Treino ATIVO 6× deste dia?':'Limpar os registos do Registo original deste dia?';
+  if(!confirm(question+'\\n\\nO treino já concluído permanece no Histórico.'))return;
+  let prefix=tab==='Treino 6×'?'p6-'+state.day+'-':state.day+'-';
+  Object.keys(state.logs).filter(k=>k.startsWith(prefix)).forEach(k=>delete state.logs[k]);
+  save();render();
 }
-function clearActiveDay(){
-  let prefix=tab==='Treino 6×'?'p6-':'';
-  let d=tab==='Treino 6×'?PLAN6[state.day]:DAYS[state.day];
-  if(!d) return;
-  if(!confirm('Limpar os registos deste dia?\\n\\nO treino concluído permanece no Histórico.')) return;
-  d.items.forEach((e,i)=>{
-    delete state.logs[prefix+key(state.day,i)];
-  });
-  if(tab==='Treino 6×') applyProgressionToActiveDay();
-  else { state.progressionSuggestions=[]; save(); }
-  render();
-}
-function clearHistory(){
-  if(!Array.isArray(state.history)||!state.history.length){
-    alert('O Histórico já está vazio.');
-    return;
+function finishWorkout(){
+  if(tab==='Treino 6×'){
+    let d=PLAN6[state.day],incomplete=[];
+    d.items.forEach((e,i)=>{
+      let l=state.logs['p6-'+key(state.day,i)]||{},sets=l.sets||[];
+      if(!l.done||sets.length!==e[3]||!sets.every(s=>s&&s.done)) incomplete.push(e[0]);
+    });
+    if(incomplete.length){alert('O treino ainda não está completo.\\n\\nFaltam concluir '+incomplete.length+' exercício(s), incluindo todas as séries.');return;}
+    state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});
+  }else{
+    let d=DAYS[state.day],incomplete=[];
+    d.items.forEach((e,i)=>{let l=state.logs[key(state.day,i)]||{};if(!l.done)incomplete.push(e[0]);});
+    if(incomplete.length){alert('O treino ainda não está completo.\\n\\nFaltam marcar '+incomplete.length+' exercício(s) como concluído.');return;}
+    state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});
   }
-  if(!confirm('APAGAR TODO O HISTÓRICO?\\n\\nSerão eliminados todos os treinos concluídos e os respetivos dados de progressão.\\n\\nO plano de treino e os valores base NÃO serão apagados.')) return;
-  if(!confirm('CONFIRMAÇÃO FINAL\\n\\nEsta ação não pode ser anulada. Apagar todo o Histórico?')) return;
-  state.history=[];
-  state.progressionSuggestions=[];
-  save();
-  render();
-  alert('Histórico apagado.');
+  state.history=state.history.slice(0,100);state.historySelected=[];save();alert('Treino concluído e guardado no histórico.');render();
 }
-function getCurrentSuggestion(exName){
-  let arr=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
-  let f=arr.find(x=>x.name===exName);
-  return f?f.suggestion:null;
+function toggleHistorySelection(i){
+  state.historySelected=Array.isArray(state.historySelected)?state.historySelected:[];
+  let p=state.historySelected.indexOf(i);
+  if(p>=0)state.historySelected.splice(p,1);else state.historySelected.push(i);
+  save();render();
+}
+function selectAllHistory(){
+  state.historySelected=state.history.map((_,i)=>i);save();render();
+}
+function clearSelectedHistory(){
+  let sel=[...(state.historySelected||[])].filter(i=>Number.isInteger(i)).sort((a,b)=>b-a);
+  if(!sel.length){alert('Seleciona primeiro os treinos que queres apagar.');return;}
+  if(!confirm('Apagar '+sel.length+' treino(s) selecionado(s) do Histórico?'))return;
+  if(!confirm('CONFIRMAÇÃO FINAL\\n\\nEsta ação não pode ser anulada. Continuar?'))return;
+  sel.forEach(i=>{if(i>=0&&i<state.history.length)state.history.splice(i,1);});
+  state.historySelected=[];save();render();alert('Treinos selecionados apagados do Histórico.');
 }
 
-function finishWorkout(){if(tab==='Treino 6×'){let d=PLAN6[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});}else{let d=DAYS[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});}state.history=state.history.slice(0,100);save();alert('Treino guardado no histórico.');render()}
 function library(){let q='';return `<section class="panel"><div class="sectionTitle"><div><h2>Biblioteca</h2><div class="muted">Todos os exercícios registados no documento.</div></div></div><input class="search" id="libSearch" placeholder="Pesquisar exercício, músculo ou nome técnico" oninput="filterLibrary(this.value)"><div id="libList" class="libraryGrid">${allExercises().map(x=>`<div class="libraryItem" data-text="${esc((x[0]+' '+x[1]+' '+x[2]).toLowerCase())}"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div><div style="margin-top:5px;font-size:12px">${esc(x[2])}</div></div>`).join('')}</div></section>`}
 function filterLibrary(q){let z=q.toLowerCase();document.querySelectorAll('.libraryItem').forEach(x=>x.style.display=x.dataset.text.includes(z)?'block':'none')}
 function allExercises(){return Object.values(DAYS).flatMap(d=>d.items)}
 function body(){let b=state.body[state.body.length-1]||{};return `<section class="panel"><h2>Corpo</h2><div class="muted">Registo corporal para acompanhar evolução.</div><div class="grid" style="grid-template-columns:repeat(2,1fr)"><div class="field"><label>Peso (kg)</label><input id="bw" value="${esc(b.weight||'')}"></div><div class="field"><label>Cintura (cm)</label><input id="waist" value="${esc(b.waist||'')}"></div><div class="field"><label>Peito (cm)</label><input id="chest" value="${esc(b.chest||'')}"></div><div class="field"><label>Braço (cm)</label><input id="arm" value="${esc(b.arm||'')}"></div></div><button class="primary" onclick="saveBody()">Guardar registo</button></section><section class="panel"><h2>Registos recentes</h2>${state.body.length?state.body.slice(-10).reverse().map(x=>`<div class="historyItem"><b>${esc(x.date)}</b><div class="muted">Peso ${esc(x.weight||'—')} kg · Cintura ${esc(x.waist||'—')} cm · Peito ${esc(x.chest||'—')} cm · Braço ${esc(x.arm||'—')} cm</div></div>`).join(''):'<div class="empty">Ainda não existem registos.</div>'}</section>`}
 function saveBody(){state.body.push({date:new Date().toLocaleString('pt-PT'),weight:document.getElementById('bw').value,waist:document.getElementById('waist').value,chest:document.getElementById('chest').value,arm:document.getElementById('arm').value});save();render()}
-function history(){return `<section class="panel"><h2>Histórico</h2><div class="muted">Sessões guardadas nesta APP.</div>${state.history.length?state.history.map((x,i)=>`<div class="historyItem"><b>${esc(x.day)} — ${esc(x.date)}</b><div class="muted">${x.items.length} exercícios registados</div></div>`).join(''):'<div class="empty">Ainda não existem treinos guardados.</div>'}</section>`}
+function history(){
+  state.historySelected=Array.isArray(state.historySelected)?state.historySelected:[];
+  let all=state.history.length>0 && state.historySelected.length===state.history.length;
+  return `<section class="panel"><div class="sectionTitle"><div><h2>Histórico</h2><div class="muted">Apenas treinos concluídos são guardados aqui.</div></div></div>${state.history.length?`<div class="historyControls"><button class="secondary" onclick="selectAllHistory()">${all?'Desmarcar todos':'☑️ Selecionar todos'}</button><button class="danger" onclick="clearSelectedHistory()">🗑️ Limpar selecionados</button></div>${state.history.map((x,i)=>`<div class="historyItem historySelect"><input class="checkAll" type="checkbox" ${state.historySelected.includes(i)?'checked':''} onchange="toggleHistorySelection(${i})"><div><b>${esc(x.day)} — ${esc(x.date)}</b><div class="muted">${x.items.length} exercícios · ${esc(x.type||'Treino')}</div></div></div>`).join('')}`:'<div class="empty">Ainda não existem treinos guardados.</div>'}</section>`
+}
 if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 render();
-
-
-
-const _renderWithProgression=render;
-render=function(){
-  _renderWithProgression();
-  renderProgressionSuggestions();
-};
 
 </script></body></html>
