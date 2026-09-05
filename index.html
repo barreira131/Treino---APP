@@ -49,8 +49,10 @@ body{background:radial-gradient(circle at 10% 0%,#e8e7ff 0,#eef2f7 28%,#f7f9fc 1
 @media(max-width:760px){.plan6Grid,.altGrid{grid-template-columns:1fr}}
 </style>
 </head>
-<body><div id="restTimer" aria-live="polite"></div><div class="wrap">
-<div class="top"><div class="brand"><div><h1>Élio — Treino</h1><div class="sub">Registo · Progressão · Biblioteca · Corpo · Histórico</div></div><button class="secondary" onclick="clearDay()">Limpar dia</button></div><nav class="tabs" id="tabs"></nav></div>
+<body>
+<div id="progressionSuggestions"></div>
+<div id="restTimer" aria-live="polite"></div><div class="wrap">
+<div class="top"><div class="brand"><div><h1>Élio — Treino</h1><div class="sub">Registo · Progressão · Biblioteca · Corpo · Histórico</div></div><button class="secondary" onclick="clearActiveDay()"">Limpar dia</button></div><nav class="tabs" id="tabs"></nav></div>
 <main id="app"></main></div><div class="bottom"><div class="bottomIn"><div><div class="muted">Treino atual</div><b id="bottomDay">—</b></div><button class="primary" onclick="finishWorkout()">✓ Treino concluído</button></div></div>
 <script>
 
@@ -220,10 +222,22 @@ const PLAN6={
 ["Prancha lateral","Side Plank","Core — oblíquos / estabilidade",2,"20–40s"]]}
 };
 const KEY='elio-treino-v3';let state=JSON.parse(localStorage.getItem(KEY)||'{}');if(!Object.keys(state).length){try{const oldState=JSON.parse(localStorage.getItem('elio-treino-v2')||'{}');if(oldState&&Object.keys(oldState).length){state=oldState;localStorage.setItem(KEY,JSON.stringify(state));}}catch(e){}}state.day=state.day||'Segunda-feira';state.logs=state.logs||{};state.history=state.history||[];state.body=state.body||[];let tab='Treino 6×';let timer=null,remaining=0;
+state.progressionSuggestions=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}function key(d,i){return d+'-'+i}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function refText(x){if(Array.isArray(x))return x.join(' → ');return String(x)}function target(ex,s){return Array.isArray(ex[5])?ex[5][s-1]:ex[5]}
 function renderTabs(){document.getElementById('tabs').innerHTML=[['Resumo','Resumo'],['Treino','Registo original'],['Plano 6×','Plano 6×'],['Treino 6×','🏋️ Treino ATIVO 6×'],['Análise muscular','Análise muscular'],['Biblioteca','Biblioteca'],['Corpo','Corpo'],['Histórico','Histórico']].map(([v,l])=>`<button class="tab ${tab===v?'active':''}" onclick="setTab('${v}')">${l}</button>`).join('')}
 function setTab(t){tab=t;render()}
+
+function renderProgressionSuggestions(){
+  let el=document.getElementById('progressionSuggestions');
+  if(!el) return;
+  let arr=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
+  if(!arr.length){el.innerHTML='';return;}
+  el.innerHTML='<div class="card"><b>💡 Progressão para o próximo treino</b><div style="margin-top:8px">'+
+    arr.map(x=>'<div style="padding:6px 0;border-top:1px solid #ddd"><b>'+x.name+'</b><br>'+progressionLabel(x.suggestion)+'</div>').join('')+
+    '</div></div>';
+}
+
 function render(){renderTabs();let a=document.getElementById('app');if(tab==='Resumo')a.innerHTML=summary();else if(tab==='Treino')a.innerHTML=workout();else if(tab==='Plano 6×')a.innerHTML=plan6Page();else if(tab==='Treino 6×')a.innerHTML=plan6Workout();else if(tab==='Análise muscular')a.innerHTML=muscleAnalysis();else if(tab==='Biblioteca')a.innerHTML=library();else if(tab==='Corpo')a.innerHTML=body();else a.innerHTML=history();document.getElementById('bottomDay').textContent=state.day;bind()}
 function summary(){let p=PLAN6[state.day],plogs=p.items.map((_,i)=>state.logs['p6-'+key(state.day,i)]||{}),done=plogs.filter(x=>x.done).length,sets=plogs.reduce((n,x)=>n+(x.sets?x.sets.filter(s=>s.done).length:0),0);let a=calcMuscles();let attention=a.filter(x=>x.status!=='good').length;return `<section class="hero"><h2>Élio — Treino</h2><div class="muted"><b>Treino ATIVO 6×</b> — este é o programa que deves seguir. O Registo original permanece apenas como histórico/base de comparação.</div><div style="margin-top:14px"><button class="primary" onclick="setTab('Treino 6×')">🏋️ Abrir treino ativo</button> <button class="secondary" onclick="setTab('Plano 6×')">🧭 Ver estrutura do Plano 6×</button></div></section><div class="grid"><div class="metric">Hoje<b>${esc(state.day)}</b></div><div class="metric">Sessão<b>${esc(p.label)}</b></div><div class="metric">Exercícios<b>${p.items.length}</b></div><div class="metric">Séries feitas<b>${sets}</b></div></div><section class="panel"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(p.label)}</h2><div class="muted">${esc(p.focus)}</div></div><button class="primary" onclick="setTab('Treino 6×')">Abrir treino ativo</button></div><div class="days">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div></section><section class="panel"><div class="sectionTitle"><div><h2>Estado muscular</h2><div class="muted">${attention?attention+' zonas merecem atenção.':'A distribuição está dentro da faixa de referência definida.'}</div></div></div><div class="muscleGrid">${a.slice(0,6).map(m=>miniMuscleCard(m)).join('')}</div></section>`}
 const MUSCLE_GROUPS=[
@@ -547,41 +561,59 @@ function stopRest(){if(timer)clearInterval(timer);if(restDoneTimeout)clearTimeou
 function changeDay(d){state.day=d;save();tab='Treino';render()}
 function changePlan6Day(d){state.day=d;save();tab='Treino 6×';render()}function clearDay(){if(confirm(tab==='Treino 6×'?'Limpar os registos do Treino ATIVO 6× deste dia?':'Limpar os registos do Registo original deste dia?')){let prefix=tab==='Treino 6×'?'p6-'+state.day+'-':state.day+'-';Object.keys(state.logs).filter(k=>k.startsWith(prefix)).forEach(k=>delete state.logs[k]);save();render()}}
 
-function getProgressionSuggestion(ex){
-  try{
-    let hist=Array.isArray(state.history)?state.history:[];
-    let candidates=[];
-    for(let h of hist){
-      if(h.type!=='Treino ATIVO 6×') continue;
-      for(let item of (h.items||[])){
-        if(item.name===ex[0] && item.log) candidates.push(item.log);
-      }
+function getLastCompletedExerciseLog(exName){
+  let hist=Array.isArray(state.history)?state.history:[];
+  for(let h of hist){
+    if(h.type!=='Treino ATIVO 6×') continue;
+    for(let item of (h.items||[])){
+      if(item.name===exName && item.log) return item.log;
     }
-    if(!candidates.length) return null;
-    let last=candidates[0], sets=last.sets||[];
-    if(!sets.length) return null;
-    let valid=sets.filter(s=>s&&Number(s.reps)>0&&Number(s.weight)>=0);
-    if(valid.length!==sets.length) return null;
-    let target=String(ex[2]||'');
-    let nums=target.match(/\d+/g)||[];
-    let min=Number(nums[0]||0), max=Number(nums[1]||min);
-    let rpes=valid.map(s=>Number(s.rpe)).filter(n=>Number.isFinite(n));
-    let allTop=valid.length===sets.length && valid.every(s=>Number(s.reps)>=max);
-    let allMin=valid.every(s=>Number(s.reps)>=min);
-    let highRpe=rpes.length===valid.length && rpes.some(n=>n>=9);
-    let maxWeight=Math.max(...valid.map(s=>Number(s.weight)));
-    if(!allMin || highRpe) return {action:'manter',weight:maxWeight,reason:highRpe?'RPE elevado':'não atingiu o mínimo de repetições'};
-    if(allTop){
-      let inc=maxWeight<50?2.5:5;
-      return {action:'aumentar',weight:maxWeight+inc,reason:'topo da faixa de repetições com RPE ≤8'};
-    }
-    return {action:'manter',weight:maxWeight,reason:'progressão ainda não consolidada'};
-  }catch(e){return null}
+  }
+  return null;
 }
-function progressionLabel(s){
-  if(!s)return '';
-  if(s.action==='aumentar') return '💡 Sugestão: '+s.weight+' kg — aumentar ('+s.reason+').';
-  return '💡 Sugestão: '+s.weight+' kg — manter ('+s.reason+').';
+function applyProgressionToActiveDay(){
+  if(tab!=='Treino 6×') return;
+  let d=PLAN6[state.day];
+  if(!d||!Array.isArray(d.items)) return;
+  let suggestions=[];
+  d.items.forEach((e,i)=>{
+    let s=getProgressionSuggestion(e);
+    if(s){
+      suggestions.push({name:e[0],suggestion:s});
+    }
+  });
+  state.progressionSuggestions=suggestions;
+  save();
+}
+function clearActiveDay(){
+  let prefix=tab==='Treino 6×'?'p6-':'';
+  let d=tab==='Treino 6×'?PLAN6[state.day]:DAYS[state.day];
+  if(!d) return;
+  if(!confirm('Limpar os registos deste dia?\\n\\nO treino concluído permanece no Histórico.')) return;
+  d.items.forEach((e,i)=>{
+    delete state.logs[prefix+key(state.day,i)];
+  });
+  if(tab==='Treino 6×') applyProgressionToActiveDay();
+  else { state.progressionSuggestions=[]; save(); }
+  render();
+}
+function clearHistory(){
+  if(!Array.isArray(state.history)||!state.history.length){
+    alert('O Histórico já está vazio.');
+    return;
+  }
+  if(!confirm('APAGAR TODO O HISTÓRICO?\\n\\nSerão eliminados todos os treinos concluídos e os respetivos dados de progressão.\\n\\nO plano de treino e os valores base NÃO serão apagados.')) return;
+  if(!confirm('CONFIRMAÇÃO FINAL\\n\\nEsta ação não pode ser anulada. Apagar todo o Histórico?')) return;
+  state.history=[];
+  state.progressionSuggestions=[];
+  save();
+  render();
+  alert('Histórico apagado.');
+}
+function getCurrentSuggestion(exName){
+  let arr=Array.isArray(state.progressionSuggestions)?state.progressionSuggestions:[];
+  let f=arr.find(x=>x.name===exName);
+  return f?f.suggestion:null;
 }
 
 function finishWorkout(){if(tab==='Treino 6×'){let d=PLAN6[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});}else{let d=DAYS[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});}state.history=state.history.slice(0,100);save();alert('Treino guardado no histórico.');render()}
@@ -593,5 +625,13 @@ function saveBody(){state.body.push({date:new Date().toLocaleString('pt-PT'),wei
 function history(){return `<section class="panel"><h2>Histórico</h2><div class="muted">Sessões guardadas nesta APP.</div>${state.history.length?state.history.map((x,i)=>`<div class="historyItem"><b>${esc(x.day)} — ${esc(x.date)}</b><div class="muted">${x.items.length} exercícios registados</div></div>`).join(''):'<div class="empty">Ainda não existem treinos guardados.</div>'}</section>`}
 if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 render();
+
+
+
+const _renderWithProgression=render;
+render=function(){
+  _renderWithProgression();
+  renderProgressionSuggestions();
+};
 
 </script></body></html>
