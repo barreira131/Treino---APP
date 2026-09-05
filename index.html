@@ -516,7 +516,7 @@ function muscleAnalysis(){
  let recs=recommendationData();
  return `<section class="analysisHero"><h2>🧬 Análise muscular semanal — V7.5</h2><div style="opacity:.9">A V7 acrescenta a dimensão que faltava: não basta saber quanto volume existe; verificamos também <b>em que porções</b>, <b>em que dias</b> e <b>com que sobreposição</b> esse volume aparece.</div><div class="analysisKpis"><div class="analysisKpi">Séries base<b>${baseSets}</b></div><div class="analysisKpi">Porções com estímulo<b>${covered}/${totalParts}</b></div><div class="analysisKpi">Atenção baixa<b>${low}</b></div><div class="analysisKpi">Volume elevado<b>${high}</b></div></div><div class="legend"><span>🟢 dentro da faixa específica</span><span>🟡 abaixo da faixa</span><span>🔴 acima da faixa</span><span>Direta = 100% · secundária = 50% · terciária = 25%</span></div></section>${frequencyDashboard(rows)}${optimizedPlan6Panel()}${alternativesByPortionPanel()}<section class="panel"><div class="sectionTitle"><div><h2>2. Cobertura por músculo e porção</h2><div class="muted">A primeira pergunta: todas as porções relevantes recebem estímulo suficiente?</div></div></div><div class="muscleGrid">${rows.map(miniMuscleCard).join('')}</div></section>${weeklyDistributionPanel(rows)}${redistributionPanel(rows)}${auditHighlights(rows)}${exerciseAuditPanel()}${recommendationPanel(recs)}${evidencePanel()}<section class="panel"><div class="sectionTitle"><div><h2>📚 Como a V7.5 calcula</h2></div></div><div class="noteBox"><b>1. Séries reais:</b> o programa continua com as séries-base efetivamente registadas; a análise não altera o treino.<br><b>2. Cobertura:</b> cada grupo é dividido em porções anatómicas para evitar que “volume de músculo” esconda uma porção pouco trabalhada.<br><b>3. Frequência:</b> a V7.5 identifica os dias em que cada porção recebe estímulo. A divisão atual pode não dar 2 exposições a todos os grupos, apesar de existirem 6 dias de treino.<br><b>4. Sobreposição:</b> um exercício pode contribuir para mais do que uma porção. A ponderação 100% / 50% / 25% é uma estimativa de programação, não uma medição fisiológica direta.<br><b>5. Decisão:</b> primeiro corrigimos a distribuição e a redundância; só depois, se necessário, adicionamos ou retiramos exercícios. Nada é alterado automaticamente.<br><b>Nota:</b> esta análise é uma ferramenta de programação baseada na literatura e no teu registo, não uma medição EMG nem um diagnóstico clínico.</div></section>`;
 }
-function plan6Workout(){let d=PLAN6[state.day];return `<section class="panel plan6Notice"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(d.label)}</h2><div class="muted">${esc(d.focus)}</div></div><span class="pill">🏋️ Treino ATIVO 6×</span></div><div class="days" style="margin-top:12px">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div><div class="noteBox"><b>Como usar:</b> este é o treino que deves executar. Regista aqui carga, repetições, RPE e conclusão. Só um treino totalmente concluído entra no Histórico.</div></section>${d.items.map((ex,i)=>plan6ExerciseCard(ex,i)).join('')}`}
+function plan6Workout(){let d=PLAN6[state.day];return `<section class="panel plan6Notice"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(d.label)}</h2><div class="muted">${esc(d.focus)}</div></div><span class="pill">🏋️ Treino ATIVO 6×</span></div><div class="days" style="margin-top:12px">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div><div class="noteBox"><b>Como usar:</b> este é o treino que deves executar. Regista aqui carga, repetições, RPE e conclusão. O histórico do Treino ATIVO 6× fica separado do Registo original.</div></section>${d.items.map((ex,i)=>plan6ExerciseCard(ex,i)).join('')}`}
 function plan6ExerciseCard(ex,i){let k='p6-'+key(state.day,i),l=state.logs[k]||{},n=ex[3],sets=Array.from({length:n},(_,j)=>l.sets?.[j]||{load:'',reps:ex[4].split('–')[0],rpe:'',pain:'',done:false});return `<article class="card exercise ${l.done?'done':''}"><div class="exerciseHead"><div><h3>${esc(ex[0])}</h3><div class="eng">${esc(ex[1])}</div><div class="focus"><b>Porção:</b> ${esc(ex[2])} · <b>Objetivo:</b> ${esc(ex[4])} reps</div></div><div class="ref">${n} séries</div></div><div class="sets">${sets.map((s,j)=>`<div class="set"><div class="setno">${j+1}</div><div class="field"><label>Carga</label><input inputmode="decimal" value="${esc(s.load)}" onchange="setP6Set(${i},${j},'load',this.value)" /></div><div class="field"><label>Reps</label><input inputmode="numeric" value="${esc(s.reps)}" onchange="setP6Set(${i},${j},'reps',this.value)" /></div><div class="field"><label>RPE</label><input inputmode="numeric" placeholder="0–10" value="${esc(s.rpe||'')}" onchange="setP6Set(${i},${j},'rpe',this.value)" /></div><button class="mini ${s.done?'done':''}" onclick="toggleP6Set(${i},${j})">✓</button></div>`).join('')}</div><div class="actions"><button class="secondary" onclick="startRest(${getPlan6Rest(ex)})">⏱ ${getPlan6Rest(ex)}s</button><a class="primary" style="text-decoration:none;padding:11px 14px;border-radius:13px;font-weight:800" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex[1]+' exercise technique')}">Vídeo</a><button class="secondary" onclick="toggleP6Exercise(${i})">${l.done?'Desmarcar':'Marcar exercício concluído'}</button></div><div class="note"><textarea placeholder="Observações" onchange="setP6Log(${i},'notes',this.value)">${esc(l.notes||'')}</textarea></div></article>`}
 function getPlan6Rest(ex){return /agachamento|prensa|peso morto|supino|press de peito|barra fixa/i.test(ex[0])?150:90}
 function p6key(i){return 'p6-'+key(state.day,i)}
@@ -546,28 +546,45 @@ function resumeRest(){if(timer!==null||remaining<=0)return;timer=setInterval(res
 function stopRest(){if(timer)clearInterval(timer);if(restDoneTimeout)clearTimeout(restDoneTimeout);timer=null;remaining=0;renderRestTimer()}
 function changeDay(d){state.day=d;save();tab='Treino';render()}
 function changePlan6Day(d){state.day=d;save();tab='Treino 6×';render()}function clearDay(){if(confirm(tab==='Treino 6×'?'Limpar os registos do Treino ATIVO 6× deste dia?':'Limpar os registos do Registo original deste dia?')){let prefix=tab==='Treino 6×'?'p6-'+state.day+'-':state.day+'-';Object.keys(state.logs).filter(k=>k.startsWith(prefix)).forEach(k=>delete state.logs[k]);save();render()}}
-function finishWorkout(){
-if(tab==='Treino 6×'){
-let d=PLAN6[state.day],incomplete=[];
-d.items.forEach((e,i)=>{
-let l=state.logs['p6-'+key(state.day,i)]||{},sets=l.sets||[];
-if(!l.done||sets.length!==e[3]||!sets.every(s=>s&&s.done)) incomplete.push(e[0]);
-});
-if(incomplete.length){
-alert('O treino ainda não está completo.\n\nFaltam concluir '+incomplete.length+' exercício(s), incluindo todas as séries.');
-return;
+
+function getProgressionSuggestion(ex){
+  try{
+    let hist=Array.isArray(state.history)?state.history:[];
+    let candidates=[];
+    for(let h of hist){
+      if(h.type!=='Treino ATIVO 6×') continue;
+      for(let item of (h.items||[])){
+        if(item.name===ex[0] && item.log) candidates.push(item.log);
+      }
+    }
+    if(!candidates.length) return null;
+    let last=candidates[0], sets=last.sets||[];
+    if(!sets.length) return null;
+    let valid=sets.filter(s=>s&&Number(s.reps)>0&&Number(s.weight)>=0);
+    if(valid.length!==sets.length) return null;
+    let target=String(ex[2]||'');
+    let nums=target.match(/\d+/g)||[];
+    let min=Number(nums[0]||0), max=Number(nums[1]||min);
+    let rpes=valid.map(s=>Number(s.rpe)).filter(n=>Number.isFinite(n));
+    let allTop=valid.length===sets.length && valid.every(s=>Number(s.reps)>=max);
+    let allMin=valid.every(s=>Number(s.reps)>=min);
+    let highRpe=rpes.length===valid.length && rpes.some(n=>n>=9);
+    let maxWeight=Math.max(...valid.map(s=>Number(s.weight)));
+    if(!allMin || highRpe) return {action:'manter',weight:maxWeight,reason:highRpe?'RPE elevado':'não atingiu o mínimo de repetições'};
+    if(allTop){
+      let inc=maxWeight<50?2.5:5;
+      return {action:'aumentar',weight:maxWeight+inc,reason:'topo da faixa de repetições com RPE ≤8'};
+    }
+    return {action:'manter',weight:maxWeight,reason:'progressão ainda não consolidada'};
+  }catch(e){return null}
 }
-state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});
-}else{
-let d=DAYS[state.day],incomplete=[];
-d.items.forEach((e,i)=>{let l=state.logs[key(state.day,i)]||{};if(!l.done) incomplete.push(e[0]);});
-if(incomplete.length){
-alert('O treino ainda não está completo.\n\nFaltam marcar '+incomplete.length+' exercício(s) como concluído.');
-return;
+function progressionLabel(s){
+  if(!s)return '';
+  if(s.action==='aumentar') return '💡 Sugestão: '+s.weight+' kg — aumentar ('+s.reason+').';
+  return '💡 Sugestão: '+s.weight+' kg — manter ('+s.reason+').';
 }
-state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});
-}
-state.history=state.history.slice(0,100);save();alert('Treino concluído e guardado no histórico.');render()}
+
+function finishWorkout(){if(tab==='Treino 6×'){let d=PLAN6[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});}else{let d=DAYS[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});}state.history=state.history.slice(0,100);save();alert('Treino guardado no histórico.');render()}
 function library(){let q='';return `<section class="panel"><div class="sectionTitle"><div><h2>Biblioteca</h2><div class="muted">Todos os exercícios registados no documento.</div></div></div><input class="search" id="libSearch" placeholder="Pesquisar exercício, músculo ou nome técnico" oninput="filterLibrary(this.value)"><div id="libList" class="libraryGrid">${allExercises().map(x=>`<div class="libraryItem" data-text="${esc((x[0]+' '+x[1]+' '+x[2]).toLowerCase())}"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div><div style="margin-top:5px;font-size:12px">${esc(x[2])}</div></div>`).join('')}</div></section>`}
 function filterLibrary(q){let z=q.toLowerCase();document.querySelectorAll('.libraryItem').forEach(x=>x.style.display=x.dataset.text.includes(z)?'block':'none')}
 function allExercises(){return Object.values(DAYS).flatMap(d=>d.items)}
