@@ -1,42 +1,549 @@
-<div id="workout-app" class="min-h-full p-4 sm:p-6">
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Élio — Treino">
+<link rel="manifest" href="manifest.json"><title>Élio — Treino V8 REAL · Mobile</title>
 <style>
-#workout-app{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--app-text,#17202a);background:light-dark(#f5f7fa,#11151a);min-height:620px}
-#workout-app *{box-sizing:border-box}#workout-app .wrap{max-width:760px;margin:auto}#workout-app .top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}#workout-app h1{font-size:24px;font-weight:800;margin:0}#workout-app .muted{color:#697586;font-size:13px}#workout-app .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px}#workout-app button{min-height:44px;border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}#workout-app .day{background:#e3e8ee;color:#26323f;white-space:nowrap}#workout-app .day.active{background:#111827;color:#fff}#workout-app .card{background:light-dark(#fff,#1a2027);border:1px solid #d9dee5;border-radius:16px;padding:16px;margin-bottom:12px}#workout-app .exercise-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}#workout-app .exercise-name{font-weight:800;font-size:17px}#workout-app .target{font-size:13px;color:#697586;margin-top:3px}#workout-app .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}#workout-app label{font-size:12px;color:#697586;display:block;margin-bottom:4px}#workout-app input{width:100%;min-height:44px;border:1px solid #cbd3dc;border-radius:10px;padding:8px 10px;font-size:16px;background:transparent;color:inherit}#workout-app .sets{margin-top:12px;display:grid;gap:7px}#workout-app .setrow{display:grid;grid-template-columns:42px 1fr 1fr 42px 42px;gap:6px;align-items:center}#workout-app .setno{font-weight:800;text-align:center}#workout-app .smallbtn{min-width:42px;padding:8px 4px;background:#e9edf2;color:#26323f}#workout-app .done{background:#dcefe1!important;color:#245b32!important}#workout-app .rest{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid #e0e5ea}.timer{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}.actions{display:flex;gap:8px;flex-wrap:wrap}.primary{background:#111827;color:#fff}.secondary{background:#e7ebf0;color:#26323f}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef1f5;border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:20px}.footer{font-size:12px;color:#697586;margin-top:14px;line-height:1.45}@media(max-width:480px){#workout-app{padding:12px}.grid{grid-template-columns:1fr 1fr!important}.setrow{grid-template-columns:30px 1fr 1fr 42px 42px}.card{padding:13px}}
+:root{--bg:#f5f7fa;--panel:#fff;--ink:#17202a;--muted:#687385;--line:#dbe1e8;--dark:#111827;--accent:#17233a;--ok:#dff2e5;--warn:#fff2cf;--bad:#ffe0e0;--blue:#e3ecff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea{font:inherit}button{border:0;border-radius:13px;padding:11px 14px;font-weight:800;cursor:pointer}.wrap{max-width:900px;margin:auto;padding:14px 14px 90px}.top{position:sticky;top:0;z-index:10;background:rgba(245,247,250,.95);backdrop-filter:blur(12px);padding:8px 0 12px}.brand{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand h1{margin:0;font-size:24px}.sub{font-size:12px;color:var(--muted);margin-top:2px}.tabs{display:flex;gap:7px;overflow:auto;padding:10px 0}.tab{white-space:nowrap;background:#e9edf2;color:#26323f}.tab.active{background:var(--dark);color:#fff}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:12px}.hero{background:var(--dark);color:#fff;border-radius:22px;padding:18px}.hero h2{margin:0 0 5px;font-size:22px}.muted{color:var(--muted);font-size:13px}.hero .muted{color:#cbd5e1}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}.metric{background:#eef1f5;border-radius:15px;padding:11px}.metric b{display:block;font-size:19px;margin-top:3px}.days{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.day{background:#edf0f4;text-align:left;min-height:62px}.day.active{background:var(--dark);color:#fff}.sectionTitle{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:12px}.sectionTitle h2{margin:0;font-size:21px}.pill{display:inline-block;background:#eef1f5;border-radius:99px;padding:6px 9px;font-size:11px;font-weight:800}.exercise{border-left:5px solid #cbd5e1}.exercise.done{border-left-color:#4d8b5a;background:#f7fcf8}.exerciseHead{display:flex;justify-content:space-between;gap:10px}.exercise h3{margin:0;font-size:17px}.exercise .eng{font-size:12px;color:var(--muted);margin-top:2px}.focus{font-size:13px;margin:7px 0;color:#3d4b5c}.ref{background:#eef1f5;border-radius:12px;padding:8px;font-size:12px;font-weight:800;white-space:nowrap;height:max-content}.sets{display:grid;gap:7px;margin-top:12px}.set{display:grid;grid-template-columns:34px 1fr 1fr 1fr 42px;gap:6px;align-items:end}.setno{font-weight:900;text-align:center;padding-bottom:12px}.field label{display:block;font-size:10px;color:var(--muted)}input,textarea{width:100%;border:1px solid #cbd3dc;border-radius:10px;padding:9px;background:#fff;color:var(--ink)}input{min-height:42px}.mini{min-height:42px;padding:7px 5px;background:#e9edf2;color:#26323f}.mini.done{background:#dff2e5}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.primary{background:var(--dark);color:#fff}.secondary{background:#e9edf2;color:#26323f}.rest{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);margin-top:12px;padding-top:11px}.timer{font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}.note{margin-top:9px}.note textarea{min-height:58px}.progress{margin-top:10px;padding:9px 10px;border-radius:12px;background:#f5f0d9;font-size:12px}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#eef1f5;border-radius:14px;padding:11px;text-align:center}.stat b{display:block;font-size:20px}.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:9px 12px;z-index:20}.bottomIn{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}.search{margin-bottom:12px}.historyItem{padding:10px 0;border-bottom:1px solid var(--line)}.libraryGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.libraryItem{padding:12px;background:#f7f8fa;border-radius:14px}.empty{padding:25px;text-align:center;color:var(--muted)}
+@media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr)}.days{grid-template-columns:repeat(2,1fr)}.set{grid-template-columns:25px 1fr 1fr 1fr 40px}.libraryGrid{grid-template-columns:1fr}.exerciseHead{display:block}.ref{display:inline-block;margin-top:8px}.wrap{padding-left:10px;padding-right:10px}}
+
+/* ===== ÉLIO V7.3 — visual upgrade ===== */
+:root{--bg:#eef2f7;--panel:#ffffff;--ink:#172033;--muted:#667085;--line:#d9e0ea;--dark:#101828;--accent:#5b5bd6;--accent2:#7c3aed;--ok:#dcfce7;--warn:#fef3c7;--bad:#fee2e2;--blue:#e0edff;--cyan:#dff7fb;--pink:#fce7f3;--orange:#ffedd5;--green:#dcfce7;--purple:#ede9fe;--shadow:0 10px 28px rgba(16,24,40,.08)}
+body{background:radial-gradient(circle at 10% 0%,#e8e7ff 0,#eef2f7 28%,#f7f9fc 100%);color:var(--ink)}
+.top{background:linear-gradient(135deg,#171c3a,#4f46a5 58%,#7c3aed);color:#fff;box-shadow:0 8px 30px rgba(67,56,202,.22)}
+.top .muted,.hero .muted{color:rgba(255,255,255,.78)}
+.tabs{gap:8px}.tab{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.09);color:#fff;border-radius:12px;font-weight:800}.tab.active{background:#fff;color:#4338ca;box-shadow:0 5px 14px rgba(0,0,0,.12)}
+.hero{background:linear-gradient(135deg,#111827,#4338ca 60%,#7c3aed);color:#fff;border:0;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:'É';position:absolute;right:24px;top:-28px;font-size:170px;font-weight:900;color:rgba(255,255,255,.07);line-height:1}
+.metric,.panel,.card{border:1px solid rgba(148,163,184,.28);box-shadow:var(--shadow);background:rgba(255,255,255,.94)}
+.metric{border-top:4px solid #6366f1}.metric:nth-child(2){border-top-color:#06b6d4}.metric:nth-child(3){border-top-color:#22c55e}.metric:nth-child(4){border-top-color:#f59e0b}
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.day{border:1px solid var(--line);border-radius:15px;padding:12px;background:#f8fafc;font-weight:800;color:#334155}.day.active{background:linear-gradient(135deg,#eef2ff,#e9d5ff);border-color:#8b5cf6;color:#4c1d95}
+.card{border-radius:18px;overflow:hidden}.exerciseHead{background:linear-gradient(90deg,#f8fafc,#fff);border-bottom:1px solid var(--line)}.focus{color:#4338ca}.ref{background:#eef2ff;border:1px solid #ddd6fe;color:#5b21b6;border-radius:10px;padding:8px 10px;font-weight:800}
+.set{border-radius:12px;background:#f8fafc;border:1px solid #e5e7eb}.setno{background:#e0e7ff;color:#3730a3;border-radius:10px;font-weight:900}.mini{background:#fff;border:1px solid #cbd5e1}.mini.done{background:#22c55e;color:#fff;border-color:#16a34a}.primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);box-shadow:0 5px 12px rgba(79,70,229,.2)}
+.secondary{background:#fff;border:1px solid #cbd5e1}.pill{background:#ede9fe;color:#5b21b6;border:1px solid #ddd6fe}.bottom{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-top:1px solid #dbe2ea}
+.muscleGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.muscleCard{border:1px solid #dbe2ea;border-radius:18px;background:#fff;box-shadow:var(--shadow);overflow:hidden}.muscleHead{padding:15px 16px;color:#fff;font-weight:900;display:flex;justify-content:space-between;align-items:center}.muscleBody{padding:12px 14px}.muscleRow{margin:10px 0}.muscleRowTop{display:flex;justify-content:space-between;gap:10px;font-weight:800;font-size:14px}.bar{height:9px;background:#edf0f4;border-radius:999px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;border-radius:999px}.status{font-size:12px;font-weight:900;padding:4px 8px;border-radius:999px}.status.good{background:#dcfce7;color:#166534}.status.low{background:#fef3c7;color:#92400e}.status.high{background:#fee2e2;color:#991b1b}.status.info{background:#e0edff;color:#1e40af}.analysisHero{background:linear-gradient(135deg,#172554,#4338ca,#7c3aed);color:#fff;border-radius:20px;padding:20px;box-shadow:var(--shadow)}.analysisKpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.analysisKpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px}.analysisKpi b{display:block;font-size:23px;margin-top:4px}.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.legend span{font-size:12px;padding:5px 9px;border-radius:999px;background:#fff;border:1px solid #e5e7eb;font-weight:800}.noteBox{padding:14px;border-radius:15px;background:#f8fafc;border:1px dashed #cbd5e1}.exerciseTag{display:inline-block;margin:4px 4px 0 0;padding:5px 8px;border-radius:999px;background:#f1f5f9;font-size:11px;font-weight:800;color:#475569}
+.analysisGap{margin-top:7px;font-size:11px;font-weight:900}.analysisGap.high{color:#991b1b}.analysisGap.low{color:#92400e}.analysisGap.good{color:#166534}.contribDetails{margin-top:8px;border-top:1px solid #e5e7eb;padding-top:7px}.contribDetails summary{cursor:pointer;font-size:11px;font-weight:900;color:#334155}.contribList{margin-top:7px;display:grid;gap:6px}.contribItem{padding:7px 8px;border-radius:10px;background:#f8fafc;border:1px solid #e5e7eb;display:flex;flex-direction:column;gap:2px;font-size:11px}.contribItem span{color:#64748b}.auditPanel{background:linear-gradient(180deg,#fff,#f8fafc)}.auditGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.auditGrid h3{margin:0 0 8px;font-size:15px}.auditItem{padding:10px 0;border-bottom:1px solid #e5e7eb}.auditItem>div:first-child{display:flex;justify-content:space-between;gap:8px;align-items:center}.exerciseTags{margin-top:6px}.empty{padding:10px;border-radius:10px;background:#f8fafc;color:#64748b}.
+@media(max-width:760px){.days,.muscleGrid{grid-template-columns:1fr}.analysisKpis{grid-template-columns:repeat(2,1fr)}.auditGrid{grid-template-columns:1fr}.analysisKpi b{font-size:20px}}
+
+<style>
+.frequencyGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.frequencyCard{border:1px solid rgba(148,163,184,.24);border-radius:18px;padding:16px;background:rgba(255,255,255,.025)}
+.frequencyHead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.frequencyHead span{font-size:12px;color:#94a3b8}
+.dayChips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.dayChip{font-size:11px;padding:5px 8px;border-radius:999px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.2)}
+.frequencyParts{display:grid;gap:7px}.frequencyPart{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 9px;border-radius:10px;background:rgba(15,23,42,.35);font-size:12px}
+.auditTableWrap{overflow:auto;max-height:720px;border-radius:14px;border:1px solid rgba(148,163,184,.2)}
+.auditTable{width:100%;border-collapse:collapse;min-width:1050px;font-size:12px}.auditTable th{position:sticky;top:0;background:#111827;color:#cbd5e1;text-align:left;padding:10px;border-bottom:1px solid rgba(148,163,184,.25);z-index:1}.auditTable td{padding:10px;border-bottom:1px solid rgba(148,163,184,.12);vertical-align:top}.auditTable tr:hover{background:rgba(59,130,246,.06)}
+.status.none{background:#334155;color:#cbd5e1}
+@media(max-width:700px){.frequencyGrid{grid-template-columns:1fr}.auditTableWrap{max-height:560px}.analysisHero h2{font-size:21px}}
 </style>
-<div class="wrap">
-<div class="top"><div><h1>Treino — Registo</h1><div class="muted">App de treino para registar peso, repetições e descanso.</div></div><button id="resetAll" class="secondary">Limpar dia</button></div>
-<div class="card"><strong>📱 App de treino</strong><div class="muted" style="margin-top:5px">Regista cada série diretamente no telemóvel. Depois podes trazer os valores para eu analisar a tua progressão. Esta versão está pronta para publicação.</div></div>
-<div class="card"><strong>Instalação no Android</strong><div class="muted" style="margin-top:5px">Depois de esta app estar publicada num endereço web, abre-a no Chrome e usa ⋮ → Adicionar ao ecrã principal. O ícone ficará disponível no ecrã principal.</div></div>
-<div id="days" class="days"></div><div id="session"></div>
-<div class="card"><div class="summary"><div class="stat"><span class="muted">Séries feitas</span><b id="totalSets">0</b></div><div class="stat"><span class="muted">Exercícios</span><b id="totalExercises">0</b></div><div class="stat"><span class="muted">Tempo</span><b id="elapsed">00:00</b></div></div></div>
-<div class="footer">As cargas indicadas são pontos de partida. Nos exercícios de máquinas ainda sem carga conhecida, regista a primeira sessão e depois ajustamos contigo. Mantém normalmente 1–3 repetições em reserva; não precisas de falhar em todas as séries.</div>
-</div>
+<style>
+.freqKpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.freqKpis>div{padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0}.freqKpis span{display:block;font-size:11px;color:#64748b;font-weight:800}.freqKpis b{display:block;font-size:24px;margin-top:3px}.frequencyTableWrap{overflow:auto;max-height:760px;border:1px solid #e2e8f0;border-radius:14px}.frequencyTable{width:100%;border-collapse:collapse;min-width:980px;font-size:12px}.frequencyTable th{position:sticky;top:0;background:#111827;color:#fff;text-align:left;padding:10px;z-index:1}.frequencyTable td{padding:9px;border-bottom:1px solid #e5e7eb;vertical-align:middle}.frequencyTable tr:hover{background:#f8fafc}.freqRead.good{color:#166534;font-weight:900}.freqRead.low{color:#92400e;font-weight:900}.freqRead.high{color:#991b1b;font-weight:900}.redistributionGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.redistributionCard{padding:14px;border:1px solid #e2e8f0;border-radius:16px;background:#fff}.redistributionCard h3{margin:10px 0 5px}.redistributionCard p{font-size:13px}.priority{display:inline-block;color:#fff;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:900}.recommendTop{display:flex;justify-content:space-between;align-items:center;gap:8px}.recommendTarget{font-weight:900}@media(max-width:760px){.freqKpis{grid-template-columns:repeat(2,1fr)}.redistributionGrid{grid-template-columns:1fr}}
+.redistributionSmart{background:linear-gradient(180deg,#ffffff,#f7f8ff)}.smartSummary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.smartKpi{padding:12px;border:1px solid #e5e7eb;border-radius:14px;background:#fff}.smartKpi b{display:block;font-size:20px;margin-top:3px}.proposalGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.proposalCard{border:1px solid #dbe2ea;border-radius:16px;padding:14px;background:#fff}.proposalCard h3{margin:8px 0 7px;font-size:16px}.proposalMeta{display:flex;gap:7px;flex-wrap:wrap}.proposalMove{display:grid;grid-template-columns:1fr auto 1fr;gap:7px;align-items:center;margin:10px 0}.proposalDay{padding:8px 10px;border-radius:10px;background:#eef2ff;font-weight:900;font-size:12px}.proposalArrow{font-weight:900;color:#5b21b6}.proposalEffect{padding:9px 10px;border-radius:11px;background:#f8fafc;font-size:12px}.proposalEffect b{color:#166534}.proposalFoot{margin-top:8px;font-size:11px;color:#667085}.beforeAfter{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.beforeAfter div{padding:7px 8px;border-radius:10px;background:#f8fafc;font-size:11px}.beforeAfter b{display:block;font-size:15px}.proposalWarn{background:#fff7ed;border-color:#fed7aa}.proposalGood{background:#f0fdf4;border-color:#bbf7d0}@media(max-width:760px){.smartSummary{grid-template-columns:repeat(2,1fr)}.proposalGrid{grid-template-columns:1fr}.proposalMove{grid-template-columns:1fr}.proposalArrow{text-align:center}}
+
+</style>\n
+<style>
+.plan6Grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.plan6Card{border:1px solid #dbe2ea;border-radius:18px;background:#fff;padding:16px;box-shadow:var(--shadow)}.plan6Head{display:flex;justify-content:space-between;gap:10px;align-items:center}.plan6Head h3{margin:0}.plan6Tag{padding:5px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px;font-weight:900}.plan6Group{margin-top:12px;padding-top:10px;border-top:1px solid #e5e7eb}.plan6Group b{font-size:13px}.plan6Ex{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:7px;font-size:12px}.plan6Ex span{color:#64748b}.altGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.altCard{border:1px solid #e5e7eb;border-radius:15px;padding:13px;background:#fff}.altCard h4{margin:0 0 7px}.altItem{padding:7px 0;border-top:1px solid #edf0f4;font-size:12px}.altItem:first-child{border-top:0}.altWhy{color:#64748b;font-size:11px;margin-top:3px}.plan6Notice{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #c7d2fe}
+@media(max-width:760px){.plan6Grid,.altGrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><div class="brand"><div><h1>Élio — Treino</h1><div class="sub">Registo · Progressão · Biblioteca · Corpo · Histórico</div></div><button class="secondary" onclick="clearDay()">Limpar dia</button></div><nav class="tabs" id="tabs"></nav></div>
+<main id="app"></main></div><div class="bottom"><div class="bottomIn"><div><div class="muted">Treino atual</div><b id="bottomDay">—</b></div><button class="primary" onclick="finishWorkout()">✓ Treino concluído</button></div></div>
 <script>
-(()=>{
-const data={
-"Segunda — Peito/Ombros/Tríceps":[
-["Supino inclinado com halteres",3,"3–5","40 kg cada mão","150–180 s"],["Supino horizontal com halteres",3,"3–5","45 kg cada mão","150–180 s"],["Chest Press",3,"8–10","70 kg","120 s"],["Elevação lateral",3,"12–20","12 kg cada","60–90 s"],["Face Pull na polia",2,"10–15","25 kg","60–90 s"],["Extensão de tríceps na polia",3,"8–12","50 kg","90 s"]],
-"Terça — Costas/Bíceps":[
-["Puxada vertical",3,"8–10","80 kg","120 s"],["Remada sentada",3,"8–10","90 kg","120 s"],["Remada unilateral no cabo",2,"8–10/lado","50 kg","90 s"],["Curl de bíceps",3,"8–10","60 kg","90 s"],["Face Pull",2,"10–15","25 kg","60–90 s"]],
-"Quarta — Full Body leve":[
-["Chest Press",2,"10–12","55–60 kg*","90 s"],["Puxada vertical",2,"10–12","60–65 kg*","90 s"],["Leg Press 45°",2,"10–15","230–250 kg","120 s"],["Remada sentada",2,"10–12","60–65 kg*","90 s"],["Elevação lateral",2,"12–15","8–10 kg cada","60 s"]],
-"Quinta — Pernas/Core":[
-["Peso morto",3,"4–6","150 kg","180–240 s"],["Agachamento com barra",3,"4–6","120 kg","180–240 s"],["Leg Press 45°",3,"8–10","240 kg","120–180 s"],["Seated Leg Curl",3,"8–12","50 kg","90–120 s"],["Gémeos sentado",3,"10–15","60 kg","60–90 s"],["Core na polia",3,"10–15","TESTAR","60 s"]],
-"Sexta — Full Body":[
-["Chest Press",3,"10–12","55–60 kg*","90 s"],["Puxada vertical",3,"10–12","60–65 kg*","90 s"],["Leg Press 45°",3,"10–15","230–250 kg","120 s"],["Remada",2,"10–12","60–65 kg*","90 s"],["Elevação lateral",2,"12–15","8–10 kg cada","60 s"],["Tríceps na polia",2,"12–15","60–65 kg*","60–90 s"],["Bíceps",2,"10–15","50–55 kg*","60–90 s"]],
-"Sábado — Opcional":[["Cardio",1,"20–30 min","—","—"],["Core",3,"12–15","TESTAR","60 s"]],
-"Domingo — Descanso":[]
+
+const DAYS={
+"Segunda-feira":{focus:"Costas / Dorsais + Bíceps",items:[
+["Curl alternado com halteres — pegada neutra/pronada","Alternating Dumbbell Hammer/Pronated Curl","Bíceps braquial e braquial",[10,12.5,15,17.5],4,10],
+["Curl de bíceps com halteres sentado — pegada pronada","Seated Dumbbell Pronated Curl","Flexores do cotovelo",[10,12.5,12.5,15],4,10],
+["Curl de bíceps com halteres em banco inclinado — pegada pronada","Incline Dumbbell Pronated Curl","Bíceps braquial",[10,12.5,12.5,15],4,10],
+["Curl de bíceps com haltere com apoio do braço no banco — pegada pronada","Supported Dumbbell Curl — Pronated Grip","Bíceps braquial / flexores do cotovelo",[10,12.5,15,17.5],4,10],
+["Curl com halteres em banco inclinado, em decúbito ventral — pegada pronada","Prone Incline Dumbbell Curl — Pronated Grip","Bíceps braquial",[10,12.5,12.5,15],4,10],
+["Curl de bíceps com halteres em pé — pegada supinada","Standing Dumbbell Supinated Curl","Bíceps braquial",[10,10,12.5,15],4,10],
+["Curl martelo alternado com halteres","Alternating Dumbbell Hammer Curl","Braquial e braquiorradial",[15,17.5,20],3,10],
+["Curl martelo alternado com halteres com ligeira inclinação anterior do tronco","Alternating Dumbbell Hammer Curl — Forward Lean","Braquial / braquiorradial",[20,22.5,25,27.5],4,10],
+["Curl unilateral de bíceps na máquina","Unilateral Machine Biceps Curl","Bíceps braquial",[10,12.5,12.5,15],4,10],
+["Puxada vertical à frente na polia alta — barra longa, pegada pronada larga","Wide-Grip Pronated Lat Pulldown","Latíssimo do dorso",[50,55,60,65],4,10],
+["Remada baixa na polia — barra larga, pegada pronada","Seated Cable Row — Pronated Grip","Dorsais, romboides e trapézio médio",[70,75,80,85],4,10],
+["Remada baixa na polia — barra curta, pegada pronada","Close-Grip Seated Cable Row — Pronated Grip","Dorsais e costas médias",[80,85,90,95],4,10],
+["Puxada vertical na polia alta — barra longa, pegada pronada","Pronated Lat Pulldown — Wide Bar","Latíssimo do dorso",[65,70,75,80],4,10],
+["Puxada vertical na polia alta — barra curta, pegada pronada","Close-Grip Pronated Lat Pulldown","Dorsais",[80,85,90,95],4,10],
+["Remada inclinada na polia com barra — pegada pronada","Standing Bent-Over Cable Row — Pronated Grip","Dorsais e região média das costas",[50,60,70,80],4,10],
+["Remada unilateral sentada na polia com corda — pegada neutra","Unilateral Seated Cable Row — Neutral Grip","Latíssimo do dorso e romboides",[52.5,55,57.5,60],4,10],
+["Elevação na barra fixa — pegada neutra fechada","Close-Grip Neutral-Grip Pull-Up","Dorsais e flexores do cotovelo",["PC","PC","PC","PC"],4,[12,9,10,10]]]},
+"Terça-feira":{focus:"Peito + Tríceps",items:[
+["Crossover na polia alta — ênfase no peitoral inferior","High Cable Crossover — Lower Chest Emphasis","Peitoral maior — fibras inferiores",[15,20,25,30,40],5,10],
+["Crossover na polia média — ênfase na região esternal","Mid Cable Crossover — Sternal Chest Emphasis","Peitoral maior — região esternal",[20,25,30,40],4,10],
+["Crossover na polia baixa — ênfase no peitoral superior","Low Cable Crossover — Upper Chest Emphasis","Peitoral maior — fibras superiores",[15,20,25,30],4,10],
+["Press inclinado de peito na máquina","Incline Chest Press Machine","Peitoral maior — fibras claviculares",[15,20,30,40,45],5,10],
+["Press de peito na máquina — banco regulado em posição baixa","Chest Press Machine — Lower Bench Position","Peitoral maior; tríceps e deltoide anterior",[25,35,45,50],4,10],
+["Extensão de tríceps na polia alta com corda","Rope Triceps Pushdown","Tríceps braquial",[40,45,50,55],4,10],
+["Extensão de tríceps na polia alta com barra V","V-Bar Triceps Pushdown","Tríceps braquial",[60,70,80,80],4,10],
+["Extensão de tríceps acima da cabeça com corda","Overhead Rope Triceps Extension","Tríceps — cabeça longa",[40,45,47.5,50,55],5,10],
+["Extensão de tríceps na polia baixa/média com corda","Cable Triceps Extension — Low/Mid Pulley","Tríceps braquial",[40,40,40,40],4,10],
+["Dips nas barras paralelas com carga adicional","Weighted Parallel Bar Dips","Tríceps; tronco relativamente vertical",[15,20,25,45,50],5,[10,10,10,5,3]]]},
+"Quarta-feira":{focus:"Pernas / Cadeia posterior / Glúteos",items:[
+["Prensa de pernas a 45°","45-Degree Leg Press","Quadríceps, glúteos e isquiotibiais",[160,200,240,280,300],5,[10,10,10,10,8]],
+["Agachamento com barra","Barbell Squat","Quadríceps e glúteos",[70,80,90,110],4,10],
+["Peso morto romeno","Romanian Deadlift — RDL","Isquiotibiais e glúteos",[70,100,100,100],4,[10,10,7,7]],
+["Peso morto convencional","Conventional Deadlift","Cadeia posterior",[110,120,150,160],4,[10,10,10,4]],
+["Elevação de gémeos sentado","Seated Calf Raise","Gémeos — sobretudo sóleo",[40,60,80,80],4,10],
+["Elevação pélvica na máquina","Hip Thrust Machine / Glute Drive","Glúteo máximo",[40,60,80,100],4,10],
+["Abdução da anca na máquina","Hip Abduction Machine","Glúteo médio e mínimo",[50,60,70,80],4,10],
+["Extensão de pernas unilateral na máquina","Single-Leg Leg Extension","Quadríceps",[40,42.5,50,50],4,10],
+["Extensão da anca unilateral na máquina","Single-Leg Hip Extension / Glute Kickback Machine","Glúteo máximo",[70,80,80,80],4,10],
+["Flexão de pernas deitada","Lying Leg Curl","Isquiotibiais",[50,55,60,65],4,10],
+["Extensão lombar com peso","Weighted Back Extension","Eretores da coluna; glúteos e isquiotibiais",[20,20,20,20],4,15]]},
+"Quinta-feira":{focus:"Ombros / Trapézios / Rotação do ombro / Lombares",items:[
+["Crucifixo inverso com polias cruzadas — polias altas","High Cable Reverse Fly","Deltoide posterior",[10,15,20,25],4,10],
+["Crucifixo inverso com polias cruzadas — altura média","Mid Cable Reverse Fly","Deltoide posterior",[15,20,22.5,25],4,10],
+["Crucifixo inverso com polias baixas — inclinado","Low Cable Reverse Fly","Deltoide posterior",[15,17.5,20,25],4,10],
+["Crucifixo inverso unilateral com polia baixa","Single-Arm Low Cable Reverse Fly","Deltoide posterior unilateral",[10,15,17.5,20],4,10],
+["Puxada à face com corda","Cable Face Pull","Deltoide posterior, trapézio e escápula",[20,22.5,25,30],4,10],
+["Elevação lateral unilateral atrás das costas","Behind-the-Back Cable Lateral Raise","Deltoide lateral",[10,12.5,15,17.5],4,10],
+["Elevação lateral com o corpo inclinado","Leaning Cable Lateral Raise","Deltoide lateral",[10,12.5,15,17.5],4,10],
+["Elevação lateral cruzada unilateral com braçadeira","Cross-Body Cable Lateral Raise","Deltoide lateral",[10,12.5,17.5,20],4,10],
+["Elevação anterior com corda","Cable Rope Front Raise","Deltoide anterior",[30,35,40,42.5],4,10],
+["Elevação anterior unilateral com braçadeira","Single-Arm Cable Front Raise","Deltoide anterior",[12.5,15,20,30],4,10],
+["Desenvolvimento de ombros na máquina","Plate-Loaded Shoulder Press","Deltoide anterior e lateral; tríceps",[40,50,60,70,80],5,10],
+["Encolhimento de ombros na polia","Cable Shrug","Trapézio superior",[70,80,80,80],4,10],
+["Rotação externa do ombro com polia","Cable External Rotation","Rotadores externos",[15,17.5,20,25],4,10],
+["Rotação interna do ombro com polia","Cable Internal Rotation","Rotadores internos",[20,25,30,40],4,10]]},
+"Sexta-feira":{focus:"Dorsal / Costas + Bíceps + Antebraço + Abdominais",items:[
+["Elevações com peso","Weighted Pull-Up","Latíssimo do dorso e cintura escapular",["PC","+25","+35","+45"],4,[24,9,5,3]],
+["Remada curvada com barra em aparelho","Machine Barbell Bent-Over Row","Costas médias, dorsais, romboides e trapézio",[40,60,70,70],4,10],
+["Remada curvada com pega curta","Close-Grip Bent-Over Row","Dorsais e costas médias",[40,60,70,70],4,10],
+["Remada unilateral com halter","Single-Arm Dumbbell Row","Latíssimo do dorso, romboides e costas médias",[32.5,35,37.5,40],4,10],
+["Remada com apoio de peito e halteres — pega pronada","Chest-Supported Dumbbell Row — Pronated Grip","Costas médias/superiores",[17.5,20,22.5,25],4,10],
+["Pullover com halter","Dumbbell Pullover","Latíssimo do dorso",[37.5,37.5,37.5,37.5],4,10],
+["Curl de bíceps na polia baixa com barra — mãos supinadas","Cable Barbell Curl — Supinated Grip","Bíceps braquial",[40,45,50,60],4,10],
+["Curl de bíceps na polia baixa com barra — mãos pronadas","Cable Barbell Curl — Pronated Grip","Braquial e braquiorradial",[30,40,45,50],4,10],
+["Curl de bíceps unilateral na polia baixa","Single-Arm Cable Biceps Curl","Bíceps braquial unilateral",[15,20,25,30],4,10],
+["Curl de bíceps unilateral na polia atrás do corpo","Single-Arm Bayesian Cable Curl","Bíceps em posição de maior alongamento",[15,20,25,30],4,10],
+["Curl de bíceps unilateral na polia alta","Single-Arm Cable Biceps Curl — High Pulley","Bíceps braquial",[15,20,25,30],4,10],
+["Curl de bíceps na polia baixa com cabo em corda duplo","High Cable Double Biceps Curl","Bíceps e flexores do cotovelo",[50,55,60,65],4,10],
+["Flexão dos punhos com haltere unilateral — pegada pronada","Unilateral Dumbbell Wrist Curl — Pronated Grip","Flexores do antebraço",[15,17.5,20,22.5],4,10],
+["Extensão dos punhos com haltere unilateral — pegada supinada","Unilateral Dumbbell Wrist Extension — Supinated Grip","Extensores do antebraço",[9,10,12.5,12.5],4,10],
+["Extensão à frente do punho com haltere","Dumbbell Wrist Extension","Extensores do punho e antebraço",[4,4,4,4],4,10],
+["Rotação dos punhos — supinação e pronação com halteres","Dumbbell Forearm Supination and Pronation","Pronação e supinação do antebraço",[3,3,3,4],4,10],
+["Abdominais inclinados","Incline Sit-Up","Reto abdominal",["PC","PC","PC","PC"],4,20]]},
+"Sábado":{focus:"Peito + Tríceps + Dips + Peso morto",items:[
+["Extensão de tríceps deitado no banco com halteres","Dumbbell Lying Triceps Extension","Tríceps — cabeça longa",[12,12.5,12.5,15],4,10],
+["Extensão de tríceps unilateral deitado no banco com halter","Single-Arm Dumbbell Lying Triceps Extension","Tríceps unilateral",[12,12.5,12.5,15],4,10],
+["Tríceps à testa com barra + supino fechado com barra","Barbell Skull Crusher + Close-Grip Bench Press","Tríceps; peito e deltoide anterior",[30,30,30,30],4,10],
+["Tríceps à testa com halteres","Dumbbell Skull Crusher","Tríceps — cabeça longa",[12,12.5,12.5,12.5],4,10],
+["Tríceps supinado fechado com halteres","Dumbbell Close-Grip Press — Supinated Grip","Tríceps e peitoral",[22.5,25,27.5,30],4,10],
+["Tríceps francês bilateral","Bilateral Dumbbell Overhead Triceps Extension","Tríceps — cabeça longa",[17.5,20,22.5,25],4,10],
+["Tríceps francês unilateral","Single-Arm Dumbbell Overhead Triceps Extension","Tríceps unilateral",[12.5,12.5,12.5,12.5],4,10],
+["Tríceps coice","Dumbbell Triceps Kickback","Tríceps",[10,12.5,12.5,15],4,10],
+["Supino inclinado com halteres","Incline Dumbbell Bench Press","Peitoral — porção superior",[25,27.5,30,32,35],5,10],
+["Supino com halteres","Flat Dumbbell Bench Press","Peitoral maior",[35,35,35,37.5],4,10],
+["Supino declinado com halteres","Decline Dumbbell Bench Press","Peitoral — porção inferior",[25,25,27.5,30],4,10],
+["Dips com peso","Weighted Dips","Tríceps e peitoral",["PC","+25","+40","+55","PC"],5,[40,10,6,3,10]],
+["Peso morto","Barbell Deadlift","Cadeia posterior",[70,120,150,160],4,10]]}
 };
-let day=Object.keys(data)[0],start=Date.now(),remaining=0,interval=null;
-const session=document.getElementById('session'),days=document.getElementById('days');
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderDays(){days.innerHTML='';Object.keys(data).forEach(d=>{const b=document.createElement('button');b.className='day '+(d===day?'active':'');b.textContent=d.split(' — ')[0];b.addEventListener('click',()=>{day=d;start=Date.now();render()});days.appendChild(b)})}
-function render(){renderDays();let html='';data[day].forEach((e,i)=>{const [name,n,reps,load,rest]=e;html+=`<div class="card exercise" data-index="${i}"><div class="exercise-head"><div><div class="exercise-name">${esc(name)}</div><div class="target">Objetivo: ${reps} · Carga de referência: ${esc(load)} · Descanso: ${rest}</div></div></div><div class="sets">`;for(let s=1;s<=n;s++)html+=`<div class="setrow"><div class="setno">${s}</div><input aria-label="Peso série ${s}" inputmode="decimal" placeholder="kg"><input aria-label="Repetições série ${s}" inputmode="numeric" placeholder="reps"><button type="button" class="smallbtn doneBtn">✓</button><button type="button" class="smallbtn timerBtn" title="Iniciar descanso">⏱</button></div>`;html+='</div><div class="rest"><span class="muted">Regista o peso e as repetições de cada série.</span><div class="actions"><button type="button" class="secondary fillTarget">Usar referência</button></div></div></div>'});session.innerHTML=html;bind();updateStats()}
-function bind(){document.querySelectorAll('.fillTarget').forEach(btn=>btn.addEventListener('click',()=>{const card=btn.closest('.exercise'),i=+card.dataset.index,ref=data[day][i][3];card.querySelectorAll('input[aria-label^="Peso"]').forEach(x=>{if(!x.value&&ref!=='TESTAR'&&ref!=='—')x.value=ref.replace(' kg cada mão','').replace(' kg*','').replace(' cada','')})}));document.querySelectorAll('.doneBtn').forEach(btn=>btn.addEventListener('click',()=>{btn.classList.toggle('done');updateStats()}));document.querySelectorAll('.timerBtn').forEach(btn=>btn.addEventListener('click',()=>{const card=btn.closest('.exercise'),i=+card.dataset.index,sec=parseRest(data[day][i][4]);if(sec)startTimer(sec,btn)}));document.querySelectorAll('input').forEach(x=>x.addEventListener('input',updateStats))}
-function parseRest(s){const m=String(s).match(/(\d+)\s*–\s*(\d+)\s*s/);if(m)return Math.round((+m[1]+ +m[2])/2);const one=String(s).match(/(\d+)\s*s/);return one?+one[1]:0}
-function startTimer(sec,btn){if(interval)clearInterval(interval);remaining=sec;btn.textContent=fmt(remaining);interval=setInterval(()=>{remaining--;btn.textContent=fmt(Math.max(remaining,0));if(remaining<=0){clearInterval(interval);interval=null;btn.textContent='⏱'}},1000)}
-function fmt(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
-function updateStats(){let sets=0,ex=0;document.querySelectorAll('.exercise').forEach(card=>{let count=[...card.querySelectorAll('.doneBtn')].filter(b=>b.classList.contains('done')).length;if(count)ex++;sets+=count});document.getElementById('totalSets').textContent=sets;document.getElementById('totalExercises').textContent=ex;document.getElementById('elapsed').textContent=fmt(Math.floor((Date.now()-start)/1000))}
-document.getElementById('resetAll').addEventListener('click',()=>{if(confirm('Limpar os registos deste treino?')){start=Date.now();render()}});setInterval(updateStats,1000);render();
-})();
-</script></div>
+
+// Plano ativo 6×: estrutura A/B para uso no treino, mantendo DAYS como registo original.
+// Cada exposição cobre explicitamente as porções relevantes; a rotação altera exercício/equipamento.
+const PLAN6={
+"Segunda-feira":{label:"PULL A",focus:"Costas + Bíceps + Ombro posterior + Trapézio",items:[
+["Puxada vertical à frente na polia alta — barra longa, pegada pronada larga","Wide-Grip Pronated Lat Pulldown","Costas — grande dorsal / latíssimo",3,"6–10"],
+["Remada baixa na polia — barra larga, pegada pronada","Seated Cable Row — Pronated Grip","Costas — romboides / trapézio médio",2,"8–12"],
+["Elevação em Y no cabo ou banco inclinado","Cable/Incline Y-Raise","Costas — trapézio inferior",2,"10–15"],
+["Curl de bíceps com halteres em pé — pegada supinada","Standing Dumbbell Supinated Curl","Bíceps — bíceps braquial",2,"8–12"],
+["Curl martelo alternado com halteres","Alternating Dumbbell Hammer Curl","Bíceps — braquial",2,"8–12"],
+["Curl de bíceps na polia baixa com barra — mãos pronadas","Cable Barbell Curl — Pronated Grip","Bíceps — braquiorradial",2,"10–15"],
+["Crucifixo inverso com apoio de peito","Chest-Supported Reverse Fly","Ombros — deltoide posterior",2,"10–15"],
+["Encolhimento de ombros com halteres","Dumbbell Shrug","Trapézio — superior",1,"10–15"]]},
+"Terça-feira":{label:"PUSH A",focus:"Peito + Tríceps + Ombros + Manguito rotador",items:[
+["Press inclinado de peito na máquina","Incline Chest Press Machine","Peito — porção superior / clavicular",2,"6–10"],
+["Press de peito na máquina — banco regulado em posição baixa","Chest Press Machine","Peito — porção média / esternal",2,"8–12"],
+["Crossover na polia alta — ênfase no peitoral inferior","High Cable Crossover — Lower Chest Emphasis","Peito — porção inferior",2,"10–15"],
+["Extensão de tríceps acima da cabeça com corda","Overhead Rope Triceps Extension","Tríceps — cabeça longa",2,"8–12"],
+["Extensão de tríceps na polia alta com barra V","V-Bar Triceps Pushdown","Tríceps — cabeça lateral",2,"8–12"],
+["Extensão de tríceps na polia alta com corda","Rope Triceps Pushdown","Tríceps — cabeça medial",2,"10–15"],
+["Desenvolvimento de ombros na máquina","Machine Shoulder Press","Ombros — deltoide anterior",2,"6–10"],
+["Elevação lateral com halteres","Dumbbell Lateral Raise","Ombros — deltoide lateral",2,"10–15"],
+["Crucifixo inverso com polias cruzadas — altura média","Cable Reverse Fly","Ombros — deltoide posterior",2,"10–15"],
+["Rotação externa do ombro com polia","Cable External Rotation","Manguito — rotadores externos",1,"12–15"],
+["Rotação interna do ombro com polia","Cable Internal Rotation","Manguito — rotadores internos",1,"12–15"]]},
+"Quarta-feira":{label:"LEGS A",focus:"Quadríceps + Isquiotibiais + Glúteos + Gémeos + Core",items:[
+["Extensão de pernas unilateral na máquina","Unilateral Leg Extension Machine","Quadríceps — reto femoral",2,"10–15"],
+["Prensa de pernas a 45°","45-Degree Leg Press","Quadríceps — vasto lateral",2,"8–12"],
+["Agachamento com barra","Barbell Squat","Quadríceps — vasto medial / intermédio",2,"6–10"],
+["Flexão de pernas deitada","Lying Leg Curl Machine","Isquiotibiais — bíceps femoral",2,"8–12"],
+["Peso morto romeno","Romanian Deadlift","Isquiotibiais — semitendinoso",2,"6–10"],
+["Flexão de pernas sentada","Seated Leg Curl","Isquiotibiais — semimembranoso",2,"8–12"],
+["Elevação pélvica na máquina","Machine Hip Thrust","Glúteos — glúteo máximo",2,"8–12"],
+["Abdução da anca na máquina","Hip Abduction Machine","Glúteos — glúteo médio",1,"12–20"],
+["Abdução da anca na máquina com controlo de amplitude","Hip Abduction — Controlled ROM","Glúteos — glúteo mínimo",1,"12–20"],
+["Elevação de gémeos em pé","Standing Calf Raise","Gémeos — gastrocnémio",2,"8–15"],
+["Elevação de gémeos sentado","Seated Calf Raise","Gémeos — sóleo",2,"10–15"],
+["Abdominais inclinados","Incline Sit-Up","Core — reto abdominal",2,"10–20"],
+["Pallof press","Pallof Press","Core — oblíquos / estabilidade",2,"10–15"]]},
+"Quinta-feira":{label:"PULL B",focus:"Costas + Bíceps + Ombro posterior + Trapézio",items:[
+["Elevação na barra fixa — pegada neutra fechada","Close-Grip Neutral-Grip Pull-Up","Costas — grande dorsal / latíssimo",2,"6–10"],
+["Remada com apoio de peito e halteres — pega pronada","Chest-Supported Dumbbell Row — Pronated Grip","Costas — romboides / trapézio médio",2,"8–12"],
+["Elevação em Y com halteres","Dumbbell Y-Raise","Costas — trapézio inferior",2,"10–15"],
+["Curl de bíceps com halteres em banco inclinado — pegada supinada","Incline Dumbbell Supinated Curl","Bíceps — bíceps braquial",2,"8–12"],
+["Curl martelo alternado com halteres com ligeira inclinação anterior do tronco","Alternating Dumbbell Hammer Curl — Forward Lean","Bíceps — braquial",2,"8–12"],
+["Curl de bíceps na polia baixa com barra — mãos pronadas","Cable Barbell Curl — Pronated Grip","Bíceps — braquiorradial",2,"10–15"],
+["Crucifixo inverso com polias cruzadas — altura média","Cable Reverse Fly","Ombros — deltoide posterior",2,"10–15"],
+["Encolhimento de ombros com barra","Barbell Shrug","Trapézio — superior",1,"8–12"]]},
+"Sexta-feira":{label:"PUSH B",focus:"Peito + Tríceps + Ombros + Manguito rotador",items:[
+["Supino inclinado com halteres","Incline Dumbbell Bench Press","Peito — porção superior / clavicular",2,"6–10"],
+["Supino com halteres","Flat Dumbbell Bench Press","Peito — porção média / esternal",2,"8–12"],
+["Supino declinado com halteres","Decline Dumbbell Bench Press","Peito — porção inferior",2,"8–12"],
+["Tríceps francês bilateral","Bilateral Dumbbell Overhead Triceps Extension","Tríceps — cabeça longa",2,"8–12"],
+["Tríceps coice","Dumbbell Triceps Kickback","Tríceps — cabeça lateral",2,"10–15"],
+["Extensão de tríceps na polia baixa/média com corda","Cable Triceps Extension — Low/Mid Pulley","Tríceps — cabeça medial",2,"10–15"],
+["Elevação anterior com corda","Rope Front Raise","Ombros — deltoide anterior",2,"10–15"],
+["Elevação lateral cruzada unilateral com braçadeira","Single-Arm Cross-Body Cable Lateral Raise","Ombros — deltoide lateral",2,"10–15"],
+["Crucifixo inverso com polias baixas — inclinado","Low Cable Reverse Fly — Incline","Ombros — deltoide posterior",2,"10–15"],
+["Rotação externa do ombro com polia","Cable External Rotation","Manguito — rotadores externos",1,"12–15"],
+["Rotação interna do ombro com polia","Cable Internal Rotation","Manguito — rotadores internos",1,"12–15"]]},
+"Sábado":{label:"LEGS B",focus:"Quadríceps + Isquiotibiais + Glúteos + Gémeos + Core",items:[
+["Agachamento com barra","Barbell Squat","Quadríceps — reto femoral",2,"6–10"],
+["Prensa de pernas a 45°","45-Degree Leg Press","Quadríceps — vasto lateral",2,"8–12"],
+["Extensão de pernas unilateral na máquina","Unilateral Leg Extension Machine","Quadríceps — vasto medial / intermédio",2,"10–15"],
+["Peso morto romeno","Romanian Deadlift","Isquiotibiais — bíceps femoral",2,"6–10"],
+["Flexão de pernas deitada","Lying Leg Curl Machine","Isquiotibiais — semitendinoso",2,"8–12"],
+["Flexão de pernas sentada","Seated Leg Curl","Isquiotibiais — semimembranoso",2,"8–12"],
+["Extensão da anca unilateral na máquina","Unilateral Hip Extension Machine","Glúteos — glúteo máximo",2,"8–12"],
+["Abdução da anca na máquina","Hip Abduction Machine","Glúteos — glúteo médio",1,"12–20"],
+["Abdução da anca na máquina com controlo de amplitude","Hip Abduction — Controlled ROM","Glúteos — glúteo mínimo",1,"12–20"],
+["Elevação de gémeos em pé","Standing Calf Raise","Gémeos — gastrocnémio",2,"8–15"],
+["Elevação de gémeos sentado","Seated Calf Raise","Gémeos — sóleo",2,"10–15"],
+["Crunch na polia","Cable Crunch","Core — reto abdominal",2,"10–15"],
+["Prancha lateral","Side Plank","Core — oblíquos / estabilidade",2,"20–40s"]]}
+};
+const KEY='elio-treino-v3';let state=JSON.parse(localStorage.getItem(KEY)||'{}');if(!Object.keys(state).length){try{const oldState=JSON.parse(localStorage.getItem('elio-treino-v2')||'{}');if(oldState&&Object.keys(oldState).length){state=oldState;localStorage.setItem(KEY,JSON.stringify(state));}}catch(e){}}state.day=state.day||'Segunda-feira';state.logs=state.logs||{};state.history=state.history||[];state.body=state.body||[];let tab='Treino 6×';let timer=null,remaining=0;
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}function key(d,i){return d+'-'+i}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function refText(x){if(Array.isArray(x))return x.join(' → ');return String(x)}function target(ex,s){return Array.isArray(ex[5])?ex[5][s-1]:ex[5]}
+function renderTabs(){document.getElementById('tabs').innerHTML=[['Resumo','Resumo'],['Treino','Registo original'],['Plano 6×','Plano 6×'],['Treino 6×','🏋️ Treino ATIVO 6×'],['Análise muscular','Análise muscular'],['Biblioteca','Biblioteca'],['Corpo','Corpo'],['Histórico','Histórico']].map(([v,l])=>`<button class="tab ${tab===v?'active':''}" onclick="setTab('${v}')">${l}</button>`).join('')}
+function setTab(t){tab=t;render()}
+function render(){renderTabs();let a=document.getElementById('app');if(tab==='Resumo')a.innerHTML=summary();else if(tab==='Treino')a.innerHTML=workout();else if(tab==='Plano 6×')a.innerHTML=plan6Page();else if(tab==='Treino 6×')a.innerHTML=plan6Workout();else if(tab==='Análise muscular')a.innerHTML=muscleAnalysis();else if(tab==='Biblioteca')a.innerHTML=library();else if(tab==='Corpo')a.innerHTML=body();else a.innerHTML=history();document.getElementById('bottomDay').textContent=state.day;bind()}
+function summary(){let p=PLAN6[state.day],plogs=p.items.map((_,i)=>state.logs['p6-'+key(state.day,i)]||{}),done=plogs.filter(x=>x.done).length,sets=plogs.reduce((n,x)=>n+(x.sets?x.sets.filter(s=>s.done).length:0),0);let a=calcMuscles();let attention=a.filter(x=>x.status!=='good').length;return `<section class="hero"><h2>Élio — Treino</h2><div class="muted"><b>Treino ATIVO 6×</b> — este é o programa que deves seguir. O Registo original permanece apenas como histórico/base de comparação.</div><div style="margin-top:14px"><button class="primary" onclick="setTab('Treino 6×')">🏋️ Abrir treino ativo</button> <button class="secondary" onclick="setTab('Plano 6×')">🧭 Ver estrutura do Plano 6×</button></div></section><div class="grid"><div class="metric">Hoje<b>${esc(state.day)}</b></div><div class="metric">Sessão<b>${esc(p.label)}</b></div><div class="metric">Exercícios<b>${p.items.length}</b></div><div class="metric">Séries feitas<b>${sets}</b></div></div><section class="panel"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(p.label)}</h2><div class="muted">${esc(p.focus)}</div></div><button class="primary" onclick="setTab('Treino 6×')">Abrir treino ativo</button></div><div class="days">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div></section><section class="panel"><div class="sectionTitle"><div><h2>Estado muscular</h2><div class="muted">${attention?attention+' zonas merecem atenção.':'A distribuição está dentro da faixa de referência definida.'}</div></div></div><div class="muscleGrid">${a.slice(0,6).map(m=>miniMuscleCard(m)).join('')}</div></section>`}
+const MUSCLE_GROUPS=[
+ {group:'Peito',color:'#e11d48',parts:['Porção superior / clavicular','Porção média / esternal','Porção inferior']},
+ {group:'Costas',color:'#2563eb',parts:['Grande dorsal / latíssimo','Romboides / trapézio médio','Trapézio inferior']},
+ {group:'Ombros',color:'#7c3aed',parts:['Deltoide anterior','Deltoide lateral','Deltoide posterior']},
+ {group:'Bíceps',color:'#0891b2',parts:['Bíceps braquial','Braquial','Braquiorradial']},
+ {group:'Tríceps',color:'#9333ea',parts:['Cabeça longa','Cabeça lateral','Cabeça medial']},
+ {group:'Quadríceps',color:'#16a34a',parts:['Reto femoral','Vasto lateral','Vasto medial / intermédio']},
+ {group:'Isquiotibiais',color:'#0f766e',parts:['Bíceps femoral','Semitendinoso','Semimembranoso']},
+ {group:'Glúteos',color:'#ea580c',parts:['Glúteo máximo','Glúteo médio','Glúteo mínimo']},
+ {group:'Gémeos',color:'#ca8a04',parts:['Gastrocnémio','Sóleo']},
+ {group:'Lombares',color:'#475569',parts:['Eretores da coluna']},
+ {group:'Antebraço',color:'#a16207',parts:['Flexores','Extensores','Pronação / supinação']},
+ {group:'Core',color:'#dc2626',parts:['Reto abdominal','Oblíquos / estabilidade']},
+ {group:'Trapézio',color:'#64748b',parts:['Superior','Médio / inferior']},
+ {group:'Manguito rotador',color:'#059669',parts:['Rotadores externos','Rotadores internos']}
+];
+// Mapa explícito: [grupo, porção, peso, tipo]. Peso 1 = série direta; 0.5 = contribuição secundária; 0.25 = contribuição terciária.
+const MUSCLE_MAP={
+'Curl alternado com halteres — pegada neutra/pronada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary'],['Bíceps','Braquiorradial',.5,'secondary']],
+'Curl de bíceps com halteres sentado — pegada pronada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps com halteres em banco inclinado — pegada pronada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps com haltere com apoio do braço no banco — pegada pronada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl com halteres em banco inclinado, em decúbito ventral — pegada pronada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps com halteres em pé — pegada supinada':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl martelo alternado com halteres':[['Bíceps','Braquial',1,'direct'],['Bíceps','Braquiorradial',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Curl martelo alternado com halteres com ligeira inclinação anterior do tronco':[['Bíceps','Braquial',1,'direct'],['Bíceps','Braquiorradial',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Curl unilateral de bíceps na máquina':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Puxada vertical à frente na polia alta — barra longa, pegada pronada larga':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Costas','Romboides / trapézio médio',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary'],['Bíceps','Braquiorradial',.25,'secondary']],
+'Remada baixa na polia — barra larga, pegada pronada':[['Costas','Romboides / trapézio médio',1,'direct'],['Costas','Grande dorsal / latíssimo',.75,'direct'],['Costas','Trapézio inferior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary'],['Ombros','Deltoide posterior',.25,'secondary']],
+'Remada baixa na polia — barra curta, pegada pronada':[['Costas','Grande dorsal / latíssimo',.75,'direct'],['Costas','Romboides / trapézio médio',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary'],['Ombros','Deltoide posterior',.25,'secondary']],
+'Puxada vertical na polia alta — barra longa, pegada pronada':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Puxada vertical na polia alta — barra curta, pegada pronada':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Remada inclinada na polia com barra — pegada pronada':[['Costas','Grande dorsal / latíssimo',.75,'direct'],['Costas','Romboides / trapézio médio',1,'direct'],['Ombros','Deltoide posterior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Remada unilateral sentada na polia com corda — pegada neutra':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Costas','Romboides / trapézio médio',.75,'direct'],['Ombros','Deltoide posterior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Elevação na barra fixa — pegada neutra fechada':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Bíceps','Bíceps braquial',.75,'secondary'],['Bíceps','Braquiorradial',.5,'secondary']],
+'Crossover na polia alta — ênfase no peitoral inferior':[['Peito','Porção inferior',1,'direct'],['Tríceps','Cabeça lateral',.25,'secondary'],['Ombros','Deltoide anterior',.25,'secondary']],
+'Crossover na polia média — ênfase na região esternal':[['Peito','Porção média / esternal',1,'direct'],['Tríceps','Cabeça lateral',.25,'secondary']],
+'Crossover na polia baixa — ênfase no peitoral superior':[['Peito','Porção superior / clavicular',1,'direct'],['Tríceps','Cabeça lateral',.25,'secondary']],
+'Press inclinado de peito na máquina':[['Peito','Porção superior / clavicular',1,'direct'],['Peito','Porção média / esternal',.25,'secondary'],['Tríceps','Cabeça lateral',.5,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Press de peito na máquina — banco regulado em posição baixa':[['Peito','Porção média / esternal',1,'direct'],['Peito','Porção inferior',.5,'secondary'],['Tríceps','Cabeça lateral',.5,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Extensão de tríceps na polia alta com corda':[['Tríceps','Cabeça lateral',1,'direct'],['Tríceps','Cabeça medial',1,'direct'],['Tríceps','Cabeça longa',.5,'direct']],
+'Extensão de tríceps na polia alta com barra V':[['Tríceps','Cabeça lateral',1,'direct'],['Tríceps','Cabeça medial',1,'direct'],['Tríceps','Cabeça longa',.5,'direct']],
+'Extensão de tríceps acima da cabeça com corda':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Extensão de tríceps na polia baixa/média com corda':[['Tríceps','Cabeça lateral',1,'direct'],['Tríceps','Cabeça medial',1,'direct'],['Tríceps','Cabeça longa',.5,'direct']],
+'Dips nas barras paralelas com carga adicional':[['Tríceps','Cabeça lateral',.75,'direct'],['Tríceps','Cabeça medial',.75,'direct'],['Tríceps','Cabeça longa',.5,'secondary'],['Peito','Porção inferior',.75,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Prensa de pernas a 45°':[['Quadríceps','Vasto lateral',1,'direct'],['Quadríceps','Vasto medial / intermédio',1,'direct'],['Quadríceps','Reto femoral',.5,'secondary'],['Glúteos','Glúteo máximo',.75,'secondary'],['Isquiotibiais','Bíceps femoral',.5,'secondary']],
+'Agachamento com barra':[['Quadríceps','Vasto lateral',1,'direct'],['Quadríceps','Vasto medial / intermédio',1,'direct'],['Quadríceps','Reto femoral',.75,'secondary'],['Glúteos','Glúteo máximo',1,'direct'],['Isquiotibiais','Bíceps femoral',.5,'secondary'],['Core','Oblíquos / estabilidade',.25,'secondary']],
+'Peso morto romeno':[['Isquiotibiais','Bíceps femoral',1,'direct'],['Isquiotibiais','Semitendinoso',1,'direct'],['Isquiotibiais','Semimembranoso',1,'direct'],['Glúteos','Glúteo máximo',.75,'direct'],['Lombares','Eretores da coluna',.5,'secondary']],
+'Peso morto convencional':[['Lombares','Eretores da coluna',1,'direct'],['Glúteos','Glúteo máximo',.75,'secondary'],['Isquiotibiais','Bíceps femoral',.5,'secondary'],['Trapézio','Superior',.5,'secondary'],['Trapézio','Médio / inferior',.5,'secondary'],['Core','Oblíquos / estabilidade',.5,'secondary']],
+'Elevação de gémeos sentado':[['Gémeos','Sóleo',1,'direct'],['Gémeos','Gastrocnémio',.5,'secondary']],
+'Elevação pélvica na máquina':[['Glúteos','Glúteo máximo',1,'direct'],['Isquiotibiais','Bíceps femoral',.25,'secondary']],
+'Abdução da anca na máquina':[['Glúteos','Glúteo médio',1,'direct'],['Glúteos','Glúteo mínimo',1,'direct']],
+'Extensão de pernas unilateral na máquina':[['Quadríceps','Reto femoral',1,'direct'],['Quadríceps','Vasto lateral',1,'direct'],['Quadríceps','Vasto medial / intermédio',1,'direct']],
+'Extensão da anca unilateral na máquina':[['Glúteos','Glúteo máximo',1,'direct'],['Isquiotibiais','Bíceps femoral',.25,'secondary']],
+'Flexão de pernas deitada':[['Isquiotibiais','Bíceps femoral',1,'direct'],['Isquiotibiais','Semitendinoso',1,'direct'],['Isquiotibiais','Semimembranoso',1,'direct']],
+'Extensão lombar com peso':[['Lombares','Eretores da coluna',1,'direct'],['Glúteos','Glúteo máximo',.5,'secondary'],['Isquiotibiais','Bíceps femoral',.5,'secondary']],
+'Crucifixo inverso com polias cruzadas — polias altas':[['Ombros','Deltoide posterior',1,'direct'],['Trapézio','Médio / inferior',.5,'secondary']],
+'Crucifixo inverso com polias cruzadas — altura média':[['Ombros','Deltoide posterior',1,'direct'],['Trapézio','Médio / inferior',.5,'secondary']],
+'Crucifixo inverso com polias baixas — inclinado':[['Ombros','Deltoide posterior',1,'direct'],['Trapézio','Médio / inferior',.5,'secondary']],
+'Crucifixo inverso unilateral com polia baixa':[['Ombros','Deltoide posterior',1,'direct'],['Trapézio','Médio / inferior',.5,'secondary']],
+'Puxada à face com corda':[['Ombros','Deltoide posterior',1,'direct'],['Trapézio','Médio / inferior',.75,'direct'],['Trapézio','Superior',.25,'secondary']],
+'Elevação lateral unilateral atrás das costas':[['Ombros','Deltoide lateral',1,'direct']],
+'Elevação lateral com o corpo inclinado':[['Ombros','Deltoide lateral',1,'direct']],
+'Elevação lateral cruzada unilateral com braçadeira':[['Ombros','Deltoide lateral',1,'direct']],
+'Elevação anterior com corda':[['Ombros','Deltoide anterior',1,'direct']],
+'Elevação anterior unilateral com braçadeira':[['Ombros','Deltoide anterior',1,'direct']],
+'Desenvolvimento de ombros na máquina':[['Ombros','Deltoide anterior',1,'direct'],['Ombros','Deltoide lateral',.75,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Encolhimento de ombros na polia':[['Trapézio','Superior',1,'direct']],
+'Rotação externa do ombro com polia':[['Manguito rotador','Rotadores externos',1,'direct']],
+'Rotação interna do ombro com polia':[['Manguito rotador','Rotadores internos',1,'direct']],
+'Elevações com peso':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Bíceps','Bíceps braquial',.5,'secondary'],['Trapézio','Superior',.25,'secondary']],
+'Remada curvada com barra em aparelho':[['Costas','Romboides / trapézio médio',1,'direct'],['Costas','Grande dorsal / latíssimo',.75,'direct'],['Costas','Trapézio inferior',.25,'secondary'],['Ombros','Deltoide posterior',.5,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Remada curvada com pega curta':[['Costas','Grande dorsal / latíssimo',.75,'direct'],['Costas','Romboides / trapézio médio',1,'direct'],['Ombros','Deltoide posterior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Remada unilateral com halter':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Costas','Romboides / trapézio médio',.75,'direct'],['Ombros','Deltoide posterior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Remada com apoio de peito e halteres — pega pronada':[['Costas','Romboides / trapézio médio',1,'direct'],['Costas','Grande dorsal / latíssimo',.75,'direct'],['Ombros','Deltoide posterior',.25,'secondary'],['Bíceps','Bíceps braquial',.5,'secondary']],
+'Pullover com halter':[['Costas','Grande dorsal / latíssimo',1,'direct'],['Peito','Porção média / esternal',.25,'secondary']],
+'Curl de bíceps na polia baixa com barra — mãos supinadas':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps na polia baixa com barra — mãos pronadas':[['Bíceps','Braquial',1,'direct'],['Bíceps','Braquiorradial',1,'direct'],['Bíceps','Bíceps braquial',.25,'secondary']],
+'Curl de bíceps unilateral na polia baixa':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps unilateral na polia atrás do corpo':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps unilateral na polia alta':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary']],
+'Curl de bíceps na polia baixa com cabo em corda duplo':[['Bíceps','Bíceps braquial',1,'direct'],['Bíceps','Braquial',.5,'secondary'],['Bíceps','Braquiorradial',.5,'secondary']],
+'Flexão dos punhos com haltere unilateral — pegada pronada':[['Antebraço','Flexores',1,'direct']],
+'Extensão dos punhos com haltere unilateral — pegada supinada':[['Antebraço','Extensores',1,'direct']],
+'Extensão à frente do punho com haltere':[['Antebraço','Extensores',1,'direct']],
+'Rotação dos punhos — supinação e pronação com halteres':[['Antebraço','Pronação / supinação',1,'direct']],
+'Abdominais inclinados':[['Core','Reto abdominal',1,'direct'],['Core','Oblíquos / estabilidade',.25,'secondary']],
+'Extensão de tríceps deitado no banco com halteres':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Extensão de tríceps unilateral deitado no banco com halter':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Tríceps à testa com barra + supino fechado com barra':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.75,'direct'],['Tríceps','Cabeça medial',.75,'direct'],['Peito','Porção média / esternal',.5,'secondary'],['Ombros','Deltoide anterior',.25,'secondary']],
+'Tríceps à testa com halteres':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Tríceps supinado fechado com halteres':[['Tríceps','Cabeça lateral',.75,'direct'],['Tríceps','Cabeça medial',.75,'direct'],['Tríceps','Cabeça longa',.5,'secondary'],['Peito','Porção média / esternal',.5,'secondary']],
+'Tríceps francês bilateral':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Tríceps francês unilateral':[['Tríceps','Cabeça longa',1,'direct'],['Tríceps','Cabeça lateral',.5,'secondary'],['Tríceps','Cabeça medial',.5,'secondary']],
+'Tríceps coice':[['Tríceps','Cabeça lateral',1,'direct'],['Tríceps','Cabeça medial',1,'direct'],['Tríceps','Cabeça longa',.25,'secondary']],
+'Supino inclinado com halteres':[['Peito','Porção superior / clavicular',1,'direct'],['Peito','Porção média / esternal',.25,'secondary'],['Tríceps','Cabeça lateral',.5,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Supino com halteres':[['Peito','Porção média / esternal',1,'direct'],['Peito','Porção inferior',.25,'secondary'],['Tríceps','Cabeça lateral',.5,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Supino declinado com halteres':[['Peito','Porção inferior',1,'direct'],['Peito','Porção média / esternal',.25,'secondary'],['Tríceps','Cabeça lateral',.5,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Dips com peso':[['Tríceps','Cabeça lateral',.75,'direct'],['Tríceps','Cabeça medial',.75,'direct'],['Tríceps','Cabeça longa',.5,'secondary'],['Peito','Porção inferior',.75,'secondary'],['Ombros','Deltoide anterior',.5,'secondary']],
+'Peso morto':[['Lombares','Eretores da coluna',1,'direct'],['Glúteos','Glúteo máximo',.75,'secondary'],['Isquiotibiais','Bíceps femoral',.5,'secondary'],['Trapézio','Superior',.5,'secondary'],['Trapézio','Médio / inferior',.5,'secondary'],['Core','Oblíquos / estabilidade',.5,'secondary']]
+};
+function seriesCount(ex){return Array.isArray(ex[4])?ex[4].length:Number(ex[4])||0}
+function calcMuscles(){
+ const out=MUSCLE_GROUPS.map(g=>({group:g.group,color:g.color,parts:g.parts.map(part=>({part,direct:0,indirect:0,total:0,frequency:0,names:[],contributions:[]})),total:0}));
+ const index={}; out.forEach(g=>g.parts.forEach(p=>index[g.group+'|'+p.part]=p));
+ for(const [name,maps] of Object.entries(MUSCLE_MAP)){
+   let ex=null,day=''; for(const [dn,d] of Object.entries(DAYS)){const found=d.items.find(x=>x[0]===name); if(found){ex=found;day=dn;break;}}
+   if(!ex) continue; const sets=seriesCount(ex);
+   for(const [group,part,weight,type] of maps){const p=index[group+'|'+part];if(!p)continue;const val=sets*weight;p.total+=val;if(type==='direct')p.direct+=val;else p.indirect+=val;p.frequency++;p.names.push(name);p.contributions.push({name,day,sets,weight,type,val});}
+ }
+ out.forEach(g=>{g.parts.forEach(p=>{p.frequency=new Set(p.contributions.map(c=>c.name)).size;p.days=[...new Set(p.contributions.map(c=>c.day))];});g.status=statusForGroup(g)}); return out;
+}
+function bandFor(group,part){
+ const bands={
+  'Peito':{'Porção superior / clavicular':[6,18],'Porção média / esternal':[8,20],'Porção inferior':[6,16]},
+  'Costas':{'Grande dorsal / latíssimo':[8,20],'Romboides / trapézio médio':[6,18],'Trapézio inferior':[4,12]},
+  'Ombros':{'Deltoide anterior':[6,16],'Deltoide lateral':[6,14],'Deltoide posterior':[6,16]},
+  'Bíceps':{'Bíceps braquial':[6,18],'Braquial':[4,14],'Braquiorradial':[4,12]},
+  'Tríceps':{'Cabeça longa':[6,18],'Cabeça lateral':[6,18],'Cabeça medial':[4,16]},
+  'Quadríceps':{'Reto femoral':[6,16],'Vasto lateral':[8,18],'Vasto medial / intermédio':[8,18]},
+  'Isquiotibiais':{'Bíceps femoral':[6,16],'Semitendinoso':[6,16],'Semimembranoso':[6,16]},
+  'Glúteos':{'Glúteo máximo':[6,18],'Glúteo médio':[3,10],'Glúteo mínimo':[2,8]},
+  'Gémeos':{'Gastrocnémio':[4,12],'Sóleo':[4,12]},
+  'Lombares':{'Eretores da coluna':[2,10]},
+  'Antebraço':{'Flexores':[4,12],'Extensores':[4,12],'Pronação / supinação':[2,8]},
+  'Core':{'Reto abdominal':[4,12],'Oblíquos / estabilidade':[3,10]},
+  'Trapézio':{'Superior':[4,12],'Médio / inferior':[5,14]},
+  'Manguito rotador':{'Rotadores externos':[2,8],'Rotadores internos':[2,8]}
+ };
+ return (bands[group]&&bands[group][part])||[4,14];
+}
+function statusForPart(n,group,part){const [lo,hi]=bandFor(group,part);if(n<lo)return 'low';if(n>hi)return 'high';return 'good'}
+function statusForGroup(g){const active=g.parts.filter(p=>p.total>0);if(!active.length)return 'low';if(active.some(p=>statusForPart(p.total,g.group,p.part)==='high'))return 'high';if(active.some(p=>statusForPart(p.total,g.group,p.part)==='low'))return 'low';return 'good'}
+function statusText(s){return s==='low'?'Atenção: abaixo da faixa de trabalho':s==='high'?'Volume elevado: rever eficiência':'Cobertura dentro da faixa de trabalho'}
+function miniMuscleCard(m){return `<div class="muscleCard"><div class="muscleHead" style="background:${m.color}"><span>${esc(m.group)}</span><span>${m.parts.filter(p=>statusForPart(p.total,m.group,p.part)==='good').length}/${m.parts.length} na faixa</span></div><div class="muscleBody">${m.parts.map(p=>{const [lo,hi]=bandFor(m.group,p.part);const st=statusForPart(p.total,m.group,p.part);const pct=Math.min(100,Math.max(4,(p.total/hi)*100));const contribs=[...p.contributions].sort((a,b)=>b.val-a.val);const shown=contribs.slice(0,5);const gap=p.total>hi?`Excesso estimado: +${(p.total-hi).toFixed(1)}`:p.total<lo?`Falta estimada: ${(lo-p.total).toFixed(1)}`:'Dentro da faixa';return `<div class="muscleRow"><div class="muscleRowTop"><span>${esc(p.part)}</span><span class="status ${st}">${p.total.toFixed(1)}</span></div><div class="bar"><i style="width:${pct}%;background:${m.color}"></i></div><div class="muted">Diretas: ${p.direct.toFixed(1)} · Indiretas: ${p.indirect.toFixed(1)} · Exercícios: ${p.frequency} · Faixa: ${lo}–${hi}</div><div class="analysisGap ${st}">${gap}</div>${contribs.length?`<details class="contribDetails"><summary>Ver origem do estímulo (${contribs.length})</summary><div class="contribList">${shown.map(c=>`<div class="contribItem"><b>${esc(c.name)}</b><span>${esc(c.day)} · ${c.sets} séries · ${c.type==='direct'?'direta':'indireta'} · ${Math.round(c.weight*100)}% → <strong>${c.val.toFixed(1)}</strong></span></div>`).join('')}${contribs.length>5?`<div class="muted" style="margin-top:7px">+ ${contribs.length-5} outros exercícios</div>`:''}</div></details>`:''}</div>`}).join('')}</div></div>`}
+
+function muscleWeeklyDistribution(rows){
+ const map={};
+ rows.forEach(g=>g.parts.forEach(p=>{
+   const key=g.group+'|'+p.part;
+   const days=[...new Set(p.contributions.map(c=>c.day))];
+   map[key]={group:g.group,part:p.part,total:p.total,direct:p.direct,indirect:p.indirect,days};
+ }));
+ return Object.values(map);
+}
+function frequencyStatus(n){return n>=2?'good':n===1?'low':'none'}
+function frequencyDashboard(rows){
+ const parts=rows.flatMap(g=>g.parts.map(p=>({group:g.group,part:p.part,days:p.days||[],total:p.total,direct:p.direct,indirect:p.indirect}))); 
+ const two=parts.filter(p=>p.days.length>=2).length, one=parts.filter(p=>p.days.length===1).length, zero=parts.filter(p=>p.days.length===0).length;
+ const groups=rows.map(g=>({group:g.group,days:[...new Set(g.parts.flatMap(p=>p.days||[]))]}));
+ const g2=groups.filter(g=>g.days.length>=2).length, g1=groups.filter(g=>g.days.length===1).length;
+ const dayShort=d=>d.replace('Segunda-feira','SEG').replace('Terça-feira','TER').replace('Quarta-feira','QUA').replace('Quinta-feira','QUI').replace('Sexta-feira','SEX').replace('Sábado','SÁB');
+ return `<section class="panel frequencyDashboard"><div class="sectionTitle"><div><h2>🎯 2× por semana — controlo de frequência</h2><div class="muted">Esta é agora a pergunta central: em quantas sessões cada porção recebe estímulo? Não adicionamos séries para resolver uma falha de frequência; primeiro procuramos redistribuir o que já existe.</div></div><span class="pill">Meta de organização: 2 exposições</span></div><div class="freqKpis"><div><span>Porções ≥2×</span><b>${two}</b></div><div><span>Porções 1×</span><b>${one}</b></div><div><span>Porções 0×</span><b>${zero}</b></div><div><span>Grupos ≥2×</span><b>${g2}/${groups.length}</b></div></div><div class="frequencyTableWrap"><table class="frequencyTable"><thead><tr><th>Grupo</th><th>Porção</th><th>Sessões</th><th>Freq.</th><th>Séries estimadas</th><th>Leitura V7.3</th></tr></thead><tbody>${parts.map(p=>{const n=p.days.length;const cls=n>=2?'good':n===1?'low':'high';const leitura=n>=2?'✓ 2 exposições':n===1?'⚠ 1 exposição — possível redistribuição':'✕ sem estímulo';return `<tr><td><b>${esc(p.group)}</b></td><td>${esc(p.part)}</td><td>${p.days.map(dayShort).join(' · ')||'—'}</td><td><span class="status ${cls}">${n}×</span></td><td>${p.total.toFixed(1)} <span class="muted">(${p.direct.toFixed(1)} D · ${p.indirect.toFixed(1)} I)</span></td><td class="freqRead ${cls}">${leitura}</td></tr>`}).join('')}</tbody></table></div><div class="noteBox" style="margin-top:12px"><b>Regra de decisão:</b> quando uma porção aparece apenas 1×, a aplicação não manda acrescentar exercícios. Primeiro identifica-se uma sessão onde essa porção possa ser introduzida através da <b>redistribuição de exercícios já existentes</b>, evitando aumentar a sobreposição e o volume semanal total.</div></section>`;
+}
+
+function weeklyDistributionPanel(rows){
+ const items=muscleWeeklyDistribution(rows);
+ const groups=[...new Set(items.map(x=>x.group))].map(group=>{
+   const parts=items.filter(x=>x.group===group);
+   const days=[...new Set(parts.flatMap(x=>x.days))];
+   return {group,days,parts};
+ });
+ return `<section class="panel"><div class="sectionTitle"><div><h2>📅 Distribuição semanal e frequência</h2><div class="muted">Aqui distinguimos duas coisas: cobertura anatómica e frequência. Treinar 6 dias por semana não significa, por si só, que cada músculo seja treinado 2×; isso depende da divisão atual.</div></div><span class="pill">Objetivo: 2×/semana</span></div><div class="frequencyGrid">${groups.map(g=>{const missing=g.parts.filter(p=>p.days.length<2).length;const chips=g.days.map(d=>`<span class="dayChip">${esc(d.replace('-feira',''))}</span>`).join('')||'<span class="muted">Sem estímulo</span>';const partsHtml=g.parts.map(p=>`<div class="frequencyPart"><span>${esc(p.part)}</span><span class="status ${p.days.length>=2?'good':'low'}">${p.days.length}×</span></div>`).join('');const note=missing?`⚠ ${missing} porção(ões) não chegam a 2 exposições semanais.`:'✓ Todas as porções têm pelo menos 2 exposições.';return `<article class="frequencyCard"><div class="frequencyHead"><b>${esc(g.group)}</b><span>${g.days.length} dia${g.days.length===1?'':'s'}/semana</span></div><div class="dayChips">${chips}</div><div class="frequencyParts">${partsHtml}</div><div class="muted" style="margin-top:8px">${note}</div></article>`}).join('')}</div><div class="noteBox" style="margin-top:12px"><b>Importante:</b> 2×/semana é uma meta de organização do programa, não uma obrigação fisiológica. A prioridade é combinar volume recuperável, qualidade das séries e distribuição adequada das porções. A aplicação mostra a frequência atual para podermos reorganizar sem inventar séries.</div></section>`;
+}
+function exerciseAuditPanel(){
+ const rows=[];
+ Object.entries(DAYS).forEach(([day,d])=>d.items.forEach((ex,i)=>{
+   const maps=MUSCLE_MAP[ex[0]]||[];
+   const primary=maps.filter(m=>m[3]==='direct').sort((a,b)=>b[2]-a[2]);
+   const secondary=maps.filter(m=>m[3]!=='direct').sort((a,b)=>b[2]-a[2]);
+   const sets=seriesCount(ex);
+   const primaryTxt=primary.map(m=>m[0]+' — '+m[1]).join('; ')||ex[2];
+   const secondaryTxt=secondary.map(m=>m[0]+' — '+m[1]+' ('+Math.round(m[2]*100)+'%)').join('; ');
+   rows.push({day,name:ex[0],sets,primaryTxt,secondaryTxt});
+ }));
+ return `<section class="panel"><div class="sectionTitle"><div><h2>🧩 Auditoria exercício → função</h2><div class="muted">Mostra o papel de cada exercício na análise. A carga e as séries reais não são alteradas.</div></div></div><div class="auditTableWrap"><table class="auditTable"><thead><tr><th>Dia</th><th>Exercício</th><th>Séries</th><th>Foco principal</th><th>Contributos secundários</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.day.replace('-feira',''))}</td><td><b>${esc(r.name)}</b></td><td>${r.sets}</td><td>${esc(r.primaryTxt)}</td><td>${esc(r.secondaryTxt||'—')}</td></tr>`).join('')}</tbody></table></div></section>`;
+}
+function recommendationData(){
+ return [
+  {priority:'Alta',color:'#dc2626',target:'Bíceps braquial / braquial / braquiorradial',action:'Reduzir redundância de curls',why:'O volume atual é muito elevado. Há muitas variantes de curl no mesmo dia, além do contributo das puxadas e remadas.',suggest:'Manter 2–3 padrões de curl bem escolhidos e usar o restante volume para costas ou recuperação.',ex:'Curl inclinado supinado; Curl martelo; Curl apoiado',day:'Segunda-feira',type:'otimizar'},
+  {priority:'Alta',color:'#dc2626',target:'Grande dorsal / costas médias',action:'Reduzir sobreposição',why:'14 exercícios contribuem para o grande dorsal e 9 para romboides/trapézio médio. O objetivo deve ser mais estímulo útil por exercício, não simplesmente mais séries.',suggest:'Priorizar uma puxada vertical + 2 remadas complementares, variando o vetor e a função.',ex:'Puxada vertical; Remada baixa; Remada unilateral',day:'Segunda-feira',type:'otimizar'},
+  {priority:'Alta',color:'#dc2626',target:'Deltoide anterior / posterior',action:'Controlar volume indireto',why:'O deltoide anterior já recebe muito estímulo dos presses; o posterior recebe muito estímulo das remadas.',suggest:'Evitar acrescentar mais trabalho direto antes de reduzir a sobreposição. Para o posterior, usar apenas uma variante específica se necessário.',ex:'Elevação lateral; Crucifixo inverso; Face pull',day:'Quarta-feira',type:'otimizar'},
+  {priority:'Alta',color:'#dc2626',target:'Tríceps — três cabeças',action:'Reduzir redundância',why:'O tríceps recebe trabalho direto elevado e ainda participa nos presses e dips.',suggest:'Escolher 2 padrões diretos: uma extensão acima da cabeça para favorecer a cabeça longa e uma extensão/pushdown para completar o trabalho.',ex:'Tríceps francês; Extensão de tríceps na polia',day:'Terça-feira',type:'otimizar'},
+  {priority:'Média',color:'#ca8a04',target:'Gastrocnémio',action:'Adicionar estímulo específico',why:'A análise mostra 2 contribuições estimadas, abaixo da faixa definida na APP.',suggest:'Adicionar elevação de gémeos em pé, preferencialmente com amplitude completa e progressão de carga.',ex:'Elevação de gémeos em pé',day:'Quarta-feira',type:'adicionar'},
+  {priority:'Média',color:'#ca8a04',target:'Trapézio inferior',action:'Adicionar padrão específico',why:'Recebe apenas 2 contribuições estimadas. As remadas e puxadas não garantem necessariamente volume suficiente para esta porção.',suggest:'Adicionar Y-raise/elevação em Y com carga controlada.',ex:'Elevação em Y no banco; Y-raise no cabo',day:'Quinta-feira',type:'adicionar'},
+  {priority:'Média',color:'#ca8a04',target:'Glúteo médio / estabilidade da anca',action:'Manter ou reforçar conforme objetivo',why:'A cobertura está presente, mas o volume é baixo/moderado. Um exercício de abdução pode ser eficiente se esta região for uma prioridade.',suggest:'Usar abdução da anca com cabo ou máquina, sem transformar o contributo em volume excessivo.',ex:'Abdução da anca no cabo; Abdução na máquina',day:'Quinta-feira',type:'adicionar'},
+  {priority:'Média',color:'#ca8a04',target:'Sóleo',action:'Adicionar estímulo específico',why:'O sóleo aparece com 4 contribuições, dentro do limite inferior da faixa. Pode ser mantido ou reforçado se a prioridade for gémeos.',suggest:'A elevação de gémeos sentado é uma opção específica para aumentar o trabalho do sóleo.',ex:'Elevação de gémeos sentado',day:'Quarta-feira',type:'manter'},
+  {priority:'Média',color:'#ca8a04',target:'Eretores da coluna',action:'Reduzir sobreposição',why:'14 contribuições ultrapassam a faixa programada. O peso morto e outros movimentos da cadeia posterior já acrescentam estímulo.',suggest:'Não adicionar mais trabalho lombar até avaliar recuperação e técnica; considerar retirar redundâncias.',ex:'Peso morto; Extensão lombar',day:'Sexta-feira',type:'otimizar'},
+  {priority:'Baixa',color:'#16a34a',target:'Peito superior / quadríceps / core',action:'Manter',why:'Estas regiões apresentam distribuição mais equilibrada na análise atual.',suggest:'Não acrescentar volume apenas para aumentar números. Manter progressão de carga, amplitude e técnica.',ex:'Supino inclinado; Leg Press; Core',day:'Vários',type:'manter'}
+ ];
+}
+function evidenceLibrary(){
+ return [
+  {name:'Elevação lateral com halteres',target:'Deltoide lateral',reason:'Exercício de abdução do ombro; a revisão sistemática do deltoide encontrou as abduções entre os padrões com maior ativação do deltoide médio.',source:'Rabello et al., revisão sistemática sobre as três porções do deltoide (PubMed).',url:'https://pubmed.ncbi.nlm.nih.gov/39593452/'},
+  {name:'Crucifixo inverso / reverse fly',target:'Deltoide posterior',reason:'Permite trabalho direto do deltoide posterior sem depender apenas das remadas.',source:'Baseado na literatura de seleção de exercícios para as diferentes porções do deltoide.',url:'https://pubmed.ncbi.nlm.nih.gov/39593452/'},
+  {name:'Elevação em Y',target:'Trapézio inferior',reason:'Padrão de elevação que pode complementar puxadas e remadas quando se procura trabalho específico da cintura escapular.',source:'Recomendação de programação; a APP não trata EMG como equivalente a hipertrofia.',url:'https://pubmed.ncbi.nlm.nih.gov/39593452/'},
+  {name:'Elevação de gémeos sentado',target:'Sóleo',reason:'Flexão plantar com joelho fletido, útil para complementar a elevação em pé e aumentar a especificidade para o sóleo.',source:'Seleção anatómica do exercício; dose deve ser ajustada pela resposta individual.',url:'https://pubmed.ncbi.nlm.nih.gov/41843416/'},
+  {name:'Elevação de gémeos em pé',target:'Gastrocnémio',reason:'Permite trabalho específico de flexão plantar com joelho estendido.',source:'Seleção anatómica do exercício e aplicação prática de treino de resistência.',url:'https://pubmed.ncbi.nlm.nih.gov/41843416/'},
+  {name:'Abdução da anca no cabo',target:'Glúteo médio',reason:'Adiciona um padrão de abdução específico quando a região lateral da anca precisa de trabalho direto.',source:'Recomendação de programação; deve ser usada apenas quando acrescenta valor ao volume existente.',url:'https://pubmed.ncbi.nlm.nih.gov/41843416/'}
+ ];
+}
+function redistributionPanel(rows){
+ const proposals=[
+  {type:'DIVIDIR',priority:'Alta',target:'Deltoide lateral',from:'Quinta-feira',to:'Segunda-feira',exercise:'Elevação lateral unilateral atrás das costas',sets:2,total:15.75,before:'1×',after:'2×',reason:'As três variantes de elevação lateral e o desenvolvimento estão concentrados na quinta-feira. Dividir 2 das 4 séries de uma variante cria a segunda exposição sem aumentar o volume semanal.',effect:'Deltoide lateral: 1× → 2×',note:'Não acrescentar uma nova variante; redistribuir séries já existentes.'},
+  {type:'DIVIDIR',priority:'Alta',target:'Quadríceps — 3 porções',from:'Quarta-feira',to:'Sábado',exercise:'Extensão de pernas unilateral na máquina',sets:2,total:13,before:'1×',after:'2×',reason:'A prensa, o agachamento e a extensão estão concentrados na quarta-feira. Transferir 2 séries da extensão mantém o total e cria uma segunda exposição.',effect:'Reto femoral / vastos: 1× → 2×',note:'A divisão proposta é 2 séries quarta + 2 séries sábado.'},
+  {type:'DIVIDIR',priority:'Alta',target:'Semitendinoso + semimembranoso',from:'Quarta-feira',to:'Sábado',exercise:'Flexão de pernas deitada',sets:2,total:8,before:'1×',after:'2×',reason:'Estas duas porções aparecem apenas na quarta-feira no mapa atual. A flexão de pernas é um exercício já existente e específico para a flexão do joelho.',effect:'Semitendinoso / semimembranoso: 1× → 2×',note:'Manter 2 séries na quarta e 2 séries no sábado.'},
+  {type:'DIVIDIR',priority:'Média',target:'Glúteo médio + mínimo',from:'Quarta-feira',to:'Sábado',exercise:'Abdução da anca na máquina',sets:2,total:4,before:'1×',after:'2×',reason:'É o único contributo direto identificado para estas porções. Dividir as 4 séries reduz a concentração numa única sessão.',effect:'Glúteo médio / mínimo: 1× → 2×',note:'Não é necessário acrescentar abdução nova.'},
+  {type:'DIVIDIR',priority:'Média',target:'Gastrocnémio + sóleo',from:'Quarta-feira',to:'Sábado',exercise:'Elevação de gémeos sentado',sets:2,total:4,before:'1×',after:'2×',reason:'A sessão atual concentra o trabalho dos gémeos na quarta-feira. Dividir o exercício cria duas exposições mantendo as mesmas 4 séries.',effect:'Sóleo: 1× → 2×; gastrocnémio mantém 2 contribuições distribuídas',note:'Se a prioridade for gastrocnémio, a seleção do exercício pode ser revista numa fase posterior; não acrescentar volume agora.'},
+  {type:'DIVIDIR',priority:'Média',target:'Antebraço — 3 porções',from:'Sexta-feira',to:'Terça-feira',exercise:'Flexão + extensões + rotação dos punhos',sets:2,total:16,before:'1×',after:'2×',reason:'As três porções do antebraço estão concentradas na sexta. Dividir 2 séries de cada padrão entre sexta e terça cria duas exposições sem aumentar as séries semanais.',effect:'Flexores / extensores / pronação-supinação: 1× → 2×',note:'Total transferido: 6 séries (2 de cada padrão).'},
+  {type:'DIVIDIR',priority:'Média',target:'Reto abdominal',from:'Sexta-feira',to:'Quarta-feira',exercise:'Abdominais inclinados',sets:2,total:4,before:'1×',after:'2×',reason:'O trabalho direto do reto abdominal aparece apenas na sexta-feira no mapa atual. Duas séries na quarta complementam o treino de pernas sem criar novo exercício.',effect:'Reto abdominal: 1× → 2×',note:'2 séries sexta + 2 séries quarta.'},
+  {type:'DIVIDIR',priority:'Média',target:'Rotadores externos + internos',from:'Quinta-feira',to:'Sábado',exercise:'Rotação externa + rotação interna do ombro com polia',sets:2,total:4,before:'1×',after:'2×',reason:'As duas porções do manguito estão concentradas na quinta-feira. Dividir 2 séries de cada movimento dá uma segunda exposição.',effect:'Rotadores externos / internos: 1× → 2×',note:'Total transferido: 4 séries. Deve ser avaliada a tolerância do ombro antes de consolidar a divisão.'}
+ ];
+ const totalMoved=proposals.reduce((a,p)=>a+p.sets*(p.exercise.includes('+')?2:1),0);
+ return `<section class="panel redistributionSmart"><div class="sectionTitle"><div><h2>🔄 V8 REAL — Mobile</h2><div class="muted">Simulação concreta usando apenas exercícios que já existem no teu registo. Nada é alterado automaticamente.</div></div><span class="pill">335 séries mantidas</span></div><div class="smartSummary"><div class="smartKpi"><span>Propostas</span><b>${proposals.length}</b></div><div class="smartKpi"><span>Séries a redistribuir</span><b>${totalMoved}</b></div><div class="smartKpi"><span>Objetivo</span><b>1× → 2×</b></div><div class="smartKpi"><span>Novos exercícios</span><b>0</b></div></div><div class="noteBox proposalGood"><b>Princípio:</b> primeiro dividimos séries já existentes. A proposta não aumenta o volume semanal; apenas muda a distribuição entre sessões. A execução final deve ainda considerar duração da sessão, recuperação e desempenho.</div><div class="proposalGrid" style="margin-top:12px">${proposals.map(p=>`<article class="proposalCard ${p.priority==='Alta'?'proposalWarn':''}"><div class="proposalMeta"><span class="status ${p.priority==='Alta'?'high':'low'}">${p.priority}</span><span class="pill">${p.type}</span><span class="pill">${p.sets} séries</span></div><h3>${esc(p.target)}</h3><div class="proposalMove"><div class="proposalDay">${esc(p.from)}</div><div class="proposalArrow">→</div><div class="proposalDay">${esc(p.to)}</div></div><div><b>Exercício:</b> ${esc(p.exercise)}</div><div class="proposalEffect"><b>Efeito:</b> ${esc(p.effect)}</div><div class="beforeAfter"><div>Antes<b>${esc(p.before)}</b></div><div>Depois<b>${esc(p.after)}</b></div></div><p>${esc(p.reason)}</p><div class="proposalFoot"><b>Como:</b> ${esc(p.note)}</div></article>`).join('')}</div><div class="noteBox" style="margin-top:12px"><b>⚠ Importante:</b> esta é uma <b>simulação de programação</b>, não uma ordem para mudar o treino. Algumas propostas podem tornar sábado mais longo; antes de as aplicar, a V8 REAL deve comparar também a duração e a carga de cada sessão e procurar compensações por redução de redundâncias.</div></section>`;
+}
+
+function recommendationPanel(rows){
+ return `<section class="panel"><div class="sectionTitle"><div><h2>🧠 Auditoria e otimização</h2><div class="muted">A aplicação não altera automaticamente as tuas 335 séries. Primeiro identifica redundâncias e oportunidades; depois podes decidir o que mudar.</div></div><span class="pill">V7.5</span></div><div class="recommendGrid">${rows.map(r=>`<article class="recommendCard"><div class="recommendTop"><span class="priority" style="background:${r.color}">${r.priority}</span><span class="recommendTarget">${esc(r.target)}</span></div><h3>${esc(r.action)}</h3><p>${esc(r.why)}</p><div class="recommendSuggest"><b>Proposta:</b> ${esc(r.suggest)}</div><div class="muted" style="margin-top:8px"><b>Exemplos:</b> ${esc(r.ex)}</div><div class="muted" style="margin-top:5px"><b>Dia:</b> ${esc(r.day)}</div></article>`).join('')}</div></section>`;
+}
+function evidencePanel(){
+ return `<section class="panel"><div class="sectionTitle"><div><h2>🔬 Banco de exercícios eficientes</h2><div class="muted">Exercícios adicionais que podem ser usados quando uma porção muscular precisa de estímulo específico. Não são adicionados automaticamente ao teu treino.</div></div></div><div class="evidenceGrid">${evidenceLibrary().map(e=>`<article class="evidenceCard"><div class="evidenceName">${esc(e.name)}</div><div class="pill">${esc(e.target)}</div><p>${esc(e.reason)}</p><div class="muted">${esc(e.source)}</div><a target="_blank" rel="noopener" href="${e.url}">Ver fonte científica ↗</a></article>`).join('')}</div></section>`;
+}
+function auditHighlights(rows){
+ const highs=[],lows=[];
+ rows.forEach(g=>g.parts.forEach(p=>{const st=statusForPart(p.total,g.group,p.part);const item={group:g.group,part:p.part,total:p.total,direct:p.direct,indirect:p.indirect,band:bandFor(g.group,p.part),contributions:[...p.contributions].sort((a,b)=>b.val-a.val)};if(st==='high')highs.push(item);if(st==='low')lows.push(item);}));
+ highs.sort((a,b)=>(b.total-b.band[1])-(a.total-a.band[1])); lows.sort((a,b)=>(a.total-a.band[0])-(b.total-b.band[0]));
+ return `<section class="panel auditPanel"><div class="sectionTitle"><div><h2>🔎 Auditoria: de onde vem o volume?</h2><div class="muted">A V8 REAL mostra os exercícios que mais contribuem para cada porção. Isto permite corrigir redundâncias antes de alterar o programa.</div></div></div><div class="auditGrid"><div><h3>🔴 Prioridades a rever</h3>${highs.slice(0,6).map(x=>`<div class="auditItem"><div><b>${esc(x.group)} — ${esc(x.part)}</b><span class="status high">${x.total.toFixed(1)} · faixa ${x.band[0]}–${x.band[1]}</span></div><div class="muted">Diretas ${x.direct.toFixed(1)} · indiretas ${x.indirect.toFixed(1)}</div><div class="exerciseTags">${x.contributions.slice(0,3).map(c=>`<span class="exerciseTag">${esc(c.name)} · ${c.val.toFixed(1)}</span>`).join('')}</div></div>`).join('')}</div><div><h3>🟡 Abaixo da faixa</h3>${lows.length?lows.map(x=>`<div class="auditItem"><div><b>${esc(x.group)} — ${esc(x.part)}</b><span class="status low">${x.total.toFixed(1)} · faixa ${x.band[0]}–${x.band[1]}</span></div><div class="muted">Faltam aproximadamente ${(x.band[0]-x.total).toFixed(1)} contribuições para o limite inferior programado.</div><div class="exerciseTags">${x.contributions.slice(0,3).map(c=>`<span class="exerciseTag">${esc(c.name)} · ${c.val.toFixed(1)}</span>`).join('')||'<span class="muted">Sem estímulo identificado.</span>'}</div></div>`).join(''):'<div class="empty">Nenhuma porção está abaixo da faixa programada.</div>'}</div></div><div class="noteBox" style="margin-top:12px"><b>Como usar:</b> um valor vermelho é um sinal para investigar a origem do volume, não uma ordem automática para retirar exercícios. A decisão deve considerar objetivo, recuperação, desempenho, técnica e progressão.</div></section>`;
+}
+function plan6Page(){ return `<section class="analysisHero"><h2>🧭 Plano 6× — proposta de organização</h2><div style="opacity:.92">PPL × 2: cada grande grupo recebe duas exposições semanais e, em cada exposição, procuramos cobrir todas as porções relevantes. Os exercícios atuais permanecem no registo e na biblioteca; aqui aparecem combinações A/B para dar variedade.</div></section>${optimizedPlan6Panel()}${alternativesByPortionPanel()}<section class="panel"><div class="sectionTitle"><div><h2>⚖️ Regra de volume</h2><div class="muted">A frequência 2× é uma estratégia de distribuição, não uma razão para duplicar o volume atual. A proposta deve ser ajustada à recuperação, desempenho e duração das sessões.</div></div></div><div class="noteBox"><b>Importante:</b> a literatura atual mostra que o volume semanal tem relação positiva com hipertrofia, mas com retornos decrescentes; a frequência, quando o volume é controlado, pode ter efeito pequeno ou negligenciável sobre hipertrofia. Por isso usamos 2× sobretudo para distribuir melhor o trabalho e facilitar sessões de qualidade, não para justificar mais séries.</div></section>`; }
+function optimizedPlan6Panel(){
+ const days=[
+ {day:'Segunda-feira',label:'PULL A',focus:'Costas + Bíceps + Ombro posterior',groups:[
+  ['Costas','Grande dorsal / latíssimo','Puxada vertical à frente na polia alta — barra longa, pegada pronada larga',3,'Romboides / trapézio médio','Remada baixa na polia — barra larga, pegada pronada',3,'Trapézio inferior','Elevação em Y no cabo ou banco inclinado',2],
+  ['Bíceps','Bíceps braquial','Curl de bíceps com halteres em pé — pegada supinada',3,'Braquial','Curl martelo alternado com halteres',3,'Braquiorradial','Curl inverso com barra/halteres',2],
+  ['Ombros','Deltoide posterior','Crucifixo inverso com apoio de peito',2,'','',0,'','',0]
+ ]},
+ {day:'Terça-feira',label:'PUSH A',focus:'Peito + Tríceps + Ombros',groups:[
+  ['Peito','Porção superior / clavicular','Press inclinado de peito na máquina',3,'Porção média / esternal','Press de peito na máquina',3,'Porção inferior','Crossover na polia alta — ênfase no peitoral inferior',2],
+  ['Tríceps','Cabeça longa','Extensão de tríceps acima da cabeça com corda',3,'Cabeça lateral','Extensão de tríceps na polia alta com barra V',3,'Cabeça medial','Extensão de tríceps na polia alta com corda',2],
+  ['Ombros','Deltoide anterior','Desenvolvimento de ombros na máquina',2,'Deltoide lateral','Elevação lateral com halteres',3,'Deltoide posterior','Crucifixo inverso leve',2],
+  ['Manguito rotador','Rotadores externos','Rotação externa do ombro com polia',2,'Rotadores internos','Rotação interna do ombro com polia',2,'','',0]
+ ]},
+ {day:'Quarta-feira',label:'LEGS A',focus:'Quadríceps + Isquiotibiais + Glúteos + Gémeos + Core',groups:[
+  ['Quadríceps','Reto femoral','Extensão de pernas unilateral na máquina',2,'Vasto lateral','Prensa de pernas a 45°',3,'Vasto medial / intermédio','Agachamento com barra',3],
+  ['Isquiotibiais','Bíceps femoral','Flexão de pernas deitada',3,'Semitendinoso','Peso morto romeno',3,'Semimembranoso','Peso morto romeno',3],
+  ['Glúteos','Glúteo máximo','Elevação pélvica na máquina',3,'Glúteo médio','Abdução da anca na máquina',2,'Glúteo mínimo','Abdução da anca na máquina',2],
+  ['Gémeos','Gastrocnémio','Elevação de gémeos em pé',3,'Sóleo','Elevação de gémeos sentado',2,'','',0],
+  ['Core','Reto abdominal','Abdominais inclinados',2,'Oblíquos / estabilidade','Pallof press',2,'','',0]
+ ]},
+ {day:'Quinta-feira',label:'PULL B',focus:'Costas + Bíceps + Ombro posterior / trapézio',groups:[
+  ['Costas','Grande dorsal / latíssimo','Elevação na barra fixa — pegada neutra fechada',3,'Romboides / trapézio médio','Remada com apoio de peito e halteres — pega pronada',3,'Trapézio inferior','Elevação em Y com halteres',2],
+  ['Bíceps','Bíceps braquial','Curl com halteres em banco inclinado — pegada supinada',3,'Braquial','Curl martelo alternado com halteres com ligeira inclinação anterior do tronco',3,'Braquiorradial','Curl de bíceps na polia baixa com barra — mãos pronadas',2],
+  ['Ombros','Deltoide posterior','Crucifixo inverso com polias cruzadas — altura média',2,'','',0,'','',0],
+  ['Trapézio','Superior','Encolhimento de ombros na polia',2,'Médio / inferior','Puxada à face com corda',2,'','',0]
+ ]},
+ {day:'Sexta-feira',label:'PUSH B',focus:'Peito + Tríceps + Ombros + Manguito',groups:[
+  ['Peito','Porção superior / clavicular','Supino inclinado com halteres',3,'Porção média / esternal','Supino com halteres',3,'Porção inferior','Supino declinado com halteres',2],
+  ['Tríceps','Cabeça longa','Tríceps francês bilateral',3,'Cabeça lateral','Tríceps coice ou extensão na polia',3,'Cabeça medial','Extensão de tríceps na polia baixa/média com corda',2],
+  ['Ombros','Deltoide anterior','Elevação anterior com corda',2,'Deltoide lateral','Elevação lateral cruzada unilateral com braçadeira',3,'Deltoide posterior','Crucifixo inverso com polias baixas — inclinado',2],
+  ['Manguito rotador','Rotadores externos','Rotação externa do ombro com polia',2,'Rotadores internos','Rotação interna do ombro com polia',2,'','',0]
+ ]},
+ {day:'Sábado',label:'LEGS B',focus:'Quadríceps + Isquiotibiais + Glúteos + Gémeos + Core',groups:[
+  ['Quadríceps','Reto femoral','Extensão de pernas unilateral na máquina',2,'Vasto lateral','Prensa de pernas a 45°',3,'Vasto medial / intermédio','Agachamento com uma variante livre/máquina',3],
+  ['Isquiotibiais','Bíceps femoral','Peso morto romeno ou flexão de pernas',3,'Semitendinoso','Flexão de pernas deitada',2,'Semimembranoso','Flexão de pernas deitada',2],
+  ['Glúteos','Glúteo máximo','Extensão da anca unilateral na máquina',3,'Glúteo médio','Abdução da anca na máquina',2,'Glúteo mínimo','Abdução da anca na máquina',2],
+  ['Gémeos','Gastrocnémio','Elevação de gémeos em pé',3,'Sóleo','Elevação de gémeos sentado',2,'','',0],
+  ['Core','Reto abdominal','Crunch na polia ou abdominal inclinado',2,'Oblíquos / estabilidade','Pallof press ou prancha lateral',2,'','',0]
+ ]}
+ ];
+ return `<section class="panel plan6Notice"><div class="sectionTitle"><div><h2>🧭 Proposta de treino 6× — cobertura completa + rotação A/B</h2><div class="muted">Esta é a proposta de organização que melhor traduz o objetivo definido: cada grupo trabalhado 2×/semana e, em cada sessão desse grupo, todas as porções relevantes recebem estímulo. Os exercícios atuais continuam disponíveis na biblioteca para rotação; a proposta não apaga o teu registo.</div></div><span class="pill">PPL × 2</span></div><div style="margin-bottom:12px"><button class="primary" onclick="setTab('Treino 6×')">▶ Abrir treino 6×</button> <button class="secondary" onclick="setTab('Biblioteca')">🔁 Ver alternativas</button></div><div class="noteBox"><b>Princípio:</b> não precisamos de fazer todos os exercícios na mesma semana. Mantemos as tuas variantes como <b>alternativas de rotação</b> e escolhemos combinações diferentes na segunda exposição. Assim tens variedade sem transformar a variedade em volume redundante.</div><div class="plan6Grid" style="margin-top:12px">${days.map(d=>`<article class="plan6Card"><div class="plan6Head"><h3>${d.day}</h3><span class="plan6Tag">${d.label}</span></div><div class="muted" style="margin-top:4px">${d.focus}</div>${d.groups.map(g=>`<div class="plan6Group"><b>${g[0]}</b><div class="plan6Ex"><span>${g[1]} — ${g[2]}</span><strong>${g[3]}s</strong></div><div class="plan6Ex"><span>${g[4]}${g[5]?' — '+g[5]:''}</span><strong>${g[6]?g[6]+'s':''}</strong></div>${g[7]?`<div class="plan6Ex"><span>${g[7]} — ${g[8]}</span><strong>${g[9]}s</strong></div>`:''}</div>`).join('')}</article>`).join('')}</div><div class="noteBox" style="margin-top:12px"><b>Como interpretar:</b> A/B não significa treino mais fácil/difícil; significa <b>variação do vetor, equipamento e perfil de resistência</b>. A escolha final deve respeitar técnica, desempenho e recuperação. As séries indicadas são uma proposta inicial de trabalho e não uma obrigação de reproduzir as 335 séries atuais.</div></section>`;
+}
+function alternativesByPortionPanel(){
+ const groups=[
+  ['Peito',['Superior / clavicular',['Press inclinado com halteres','Press inclinado na máquina','Crossover na polia baixa']],['Médio / esternal',['Supino com halteres','Press de peito na máquina','Crossover na polia média']],['Inferior',['Supino declinado com halteres','Crossover na polia alta','Dips com inclinação adequada']]],
+  ['Costas',['Grande dorsal',['Puxada vertical na polia','Barra fixa neutra','Remada unilateral com halter','Pullover com halter']],['Romboides / trapézio médio',['Remada com apoio de peito','Remada baixa','Remada unilateral']],['Trapézio inferior',['Elevação em Y','Y-raise no cabo','Puxada à face']]],
+  ['Ombros',['Anterior',['Desenvolvimento na máquina','Press com halteres','Elevação anterior com corda']],['Lateral',['Elevação lateral com halteres','Elevação lateral no cabo','Elevação lateral cruzada']],['Posterior',['Crucifixo inverso com halteres','Crucifixo inverso no cabo','Reverse fly com apoio de peito']]],
+  ['Bíceps',['Bíceps braquial',['Curl supinado com halteres','Curl inclinado','Curl unilateral na máquina']],['Braquial',['Curl martelo','Curl martelo com inclinação anterior','Curl pronado']],['Braquiorradial',['Curl martelo','Curl inverso','Curl pronado na polia']]],
+  ['Tríceps',['Cabeça longa',['Extensão acima da cabeça com corda','Tríceps francês','Extensão deitado']],['Lateral',['Pushdown barra V','Pushdown corda','Dips']],['Medial',['Pushdown corda','Extensão na polia baixa/média','Dips']]],
+  ['Pernas',['Quadríceps',['Prensa de pernas','Agachamento','Extensão de pernas']],['Isquiotibiais',['Peso morto romeno','Flexão de pernas deitada','Good morning / variante de hinge']],['Glúteos',['Elevação pélvica','Extensão da anca','Abdução da anca']]],
+  ['Gémeos',['Gastrocnémio',['Elevação de gémeos em pé','Elevação de gémeos na prensa']],['Sóleo',['Elevação de gémeos sentado','Elevação sentado na máquina']],['Rotação semanal',['Em pé numa sessão','Sentado na outra sessão']]],
+  ['Core',['Reto abdominal',['Abdominal inclinado','Crunch na polia']],['Oblíquos / estabilidade',['Pallof press','Prancha lateral','Suitcase carry']],['Rotação',['Pallof press','Cable chop controlado']]]
+ ];
+ return `<section class="panel"><div class="sectionTitle"><div><h2>🔁 Biblioteca de alternativas por porção</h2><div class="muted">A variedade passa a ser uma função da APP: para cada porção tens várias opções. Na segunda exposição podes trocar polia por máquina, barra ou halteres sem perder a cobertura anatómica.</div></div><span class="pill">Rotação A/B</span></div><div class="altGrid">${groups.map(g=>`<article class="altCard"><h4>${g[0]}</h4>${g.slice(1).map(x=>`<div class="altItem"><b>${x[0]}</b><div>${x[1].map(n=>`<span class="exerciseTag">${n}</span>`).join('')}</div><div class="altWhy">Escolher 1 opção por exposição, evitando acumular todas na mesma sessão.</div></div>`).join('')}</article>`).join('')}</div></section>`;
+}
+
+function muscleAnalysis(){
+ let rows=calcMuscles(),baseSets=Object.values(DAYS).reduce((n,d)=>n+d.items.reduce((a,e)=>a+seriesCount(e),0),0),low=rows.reduce((n,g)=>n+g.parts.filter(p=>statusForPart(p.total,g.group,p.part)==='low').length,0),high=rows.reduce((n,g)=>n+g.parts.filter(p=>statusForPart(p.total,g.group,p.part)==='high').length,0),covered=rows.reduce((n,g)=>n+g.parts.filter(p=>p.total>0).length,0),totalParts=rows.reduce((n,g)=>n+g.parts.length,0);
+ let recs=recommendationData();
+ return `<section class="analysisHero"><h2>🧬 Análise muscular semanal — V7.5</h2><div style="opacity:.9">A V7 acrescenta a dimensão que faltava: não basta saber quanto volume existe; verificamos também <b>em que porções</b>, <b>em que dias</b> e <b>com que sobreposição</b> esse volume aparece.</div><div class="analysisKpis"><div class="analysisKpi">Séries base<b>${baseSets}</b></div><div class="analysisKpi">Porções com estímulo<b>${covered}/${totalParts}</b></div><div class="analysisKpi">Atenção baixa<b>${low}</b></div><div class="analysisKpi">Volume elevado<b>${high}</b></div></div><div class="legend"><span>🟢 dentro da faixa específica</span><span>🟡 abaixo da faixa</span><span>🔴 acima da faixa</span><span>Direta = 100% · secundária = 50% · terciária = 25%</span></div></section>${frequencyDashboard(rows)}${optimizedPlan6Panel()}${alternativesByPortionPanel()}<section class="panel"><div class="sectionTitle"><div><h2>2. Cobertura por músculo e porção</h2><div class="muted">A primeira pergunta: todas as porções relevantes recebem estímulo suficiente?</div></div></div><div class="muscleGrid">${rows.map(miniMuscleCard).join('')}</div></section>${weeklyDistributionPanel(rows)}${redistributionPanel(rows)}${auditHighlights(rows)}${exerciseAuditPanel()}${recommendationPanel(recs)}${evidencePanel()}<section class="panel"><div class="sectionTitle"><div><h2>📚 Como a V8 REAL calcula</h2></div></div><div class="noteBox"><b>1. Séries reais:</b> o programa continua com as séries-base efetivamente registadas; a análise não altera o treino.<br><b>2. Cobertura:</b> cada grupo é dividido em porções anatómicas para evitar que “volume de músculo” esconda uma porção pouco trabalhada.<br><b>3. Frequência:</b> a V8 REAL identifica os dias em que cada porção recebe estímulo. A divisão atual pode não dar 2 exposições a todos os grupos, apesar de existirem 6 dias de treino.<br><b>4. Sobreposição:</b> um exercício pode contribuir para mais do que uma porção. A ponderação 100% / 50% / 25% é uma estimativa de programação, não uma medição fisiológica direta.<br><b>5. Decisão:</b> primeiro corrigimos a distribuição e a redundância; só depois, se necessário, adicionamos ou retiramos exercícios. Nada é alterado automaticamente.<br><b>Nota:</b> esta análise é uma ferramenta de programação baseada na literatura e no teu registo, não uma medição EMG nem um diagnóstico clínico.</div></section>`;
+}
+function plan6Workout(){let d=PLAN6[state.day];return `<section class="panel plan6Notice"><div class="sectionTitle"><div><h2>${esc(state.day)} — ${esc(d.label)}</h2><div class="muted">${esc(d.focus)}</div></div><span class="pill">🏋️ Treino ATIVO 6×</span></div><div class="days" style="margin-top:12px">${Object.keys(PLAN6).map(x=>`<button class="day ${x===state.day?'active':''}" onclick="changePlan6Day('${x}')">${x}<br><small>${PLAN6[x].label}</small></button>`).join('')}</div><div class="noteBox"><b>Como usar:</b> este é o treino que deves executar. Regista aqui carga, repetições, RPE/dor e conclusão. O histórico do Treino ATIVO 6× fica separado do Registo original.</div></section>${d.items.map((ex,i)=>plan6ExerciseCard(ex,i)).join('')}`}
+function plan6ExerciseCard(ex,i){let k='p6-'+key(state.day,i),l=state.logs[k]||{},n=ex[3],sets=Array.from({length:n},(_,j)=>l.sets?.[j]||{load:'',reps:ex[4].split('–')[0],rpe:'',pain:'',done:false});return `<article class="card exercise ${l.done?'done':''}"><div class="exerciseHead"><div><h3>${esc(ex[0])}</h3><div class="eng">${esc(ex[1])}</div><div class="focus"><b>Porção:</b> ${esc(ex[2])} · <b>Objetivo:</b> ${esc(ex[4])} reps</div></div><div class="ref">${n} séries</div></div><div class="sets">${sets.map((s,j)=>`<div class="set"><div class="setno">${j+1}</div><div class="field"><label>Carga</label><input inputmode="decimal" value="${esc(s.load)}" onchange="setP6Set(${i},${j},'load',this.value)" /></div><div class="field"><label>Reps</label><input inputmode="numeric" value="${esc(s.reps)}" onchange="setP6Set(${i},${j},'reps',this.value)" /></div><div class="field"><label>RPE / Dor</label><input placeholder="RPE / dor" value="${esc(s.rpe||'')}${s.pain!==undefined&&s.pain!==''?' / '+esc(s.pain):''}" onchange="setP6Combined(${i},${j},this.value)" /></div><button class="mini ${s.done?'done':''}" onclick="toggleP6Set(${i},${j})">✓</button></div>`).join('')}</div><div class="actions"><button class="secondary" onclick="startRest(${getPlan6Rest(ex)})">⏱ ${getPlan6Rest(ex)}s</button><a class="primary" style="text-decoration:none;padding:11px 14px;border-radius:13px;font-weight:800" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex[1]+' exercise technique')}">Vídeo</a><button class="secondary" onclick="toggleP6Exercise(${i})">${l.done?'Desmarcar':'Marcar exercício concluído'}</button></div><div class="note"><textarea placeholder="Observações" onchange="setP6Log(${i},'notes',this.value)">${esc(l.notes||'')}</textarea></div></article>`}
+function getPlan6Rest(ex){return /agachamento|prensa|peso morto|supino|press de peito|barra fixa/i.test(ex[0])?150:90}
+function p6key(i){return 'p6-'+key(state.day,i)}
+function setP6Set(i,j,f,v){let k=p6key(i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j][f]=v;state.logs[k]=l;save()}
+function setP6Combined(i,j,v){let p=v.split('/').map(x=>x.trim()),k=p6key(i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j].rpe=p[0]||'';l.sets[j].pain=p[1]||'';state.logs[k]=l;save()}
+function toggleP6Set(i,j){let k=p6key(i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j].done=!l.sets[j].done;state.logs[k]=l;save();render()}
+function toggleP6Exercise(i){let k=p6key(i),l=state.logs[k]||{};l.done=!l.done;state.logs[k]=l;save();render()}
+function setP6Log(i,f,v){let k=p6key(i),l=state.logs[k]||{};l[f]=v;state.logs[k]=l;save()}
+
+function workout(){let d=DAYS[state.day];return `<section class="panel"><div class="sectionTitle"><div><h2>${esc(state.day)}</h2><div class="muted">${esc(d.focus)}</div></div><span class="pill">Registo real</span></div><div class="muted">As cargas abaixo são as cargas efetivamente registadas. A APP permite introduzir a sessão seguinte sem substituir o histórico.</div></section>${d.items.map((ex,i)=>exerciseCard(ex,i)).join('')}`}
+function exerciseCard(ex,i){let k=key(state.day,i),l=state.logs[k]||{};let n=Array.isArray(ex[4])?ex[4].length:ex[4];if(!Number.isInteger(n))n=4;let sets=Array.from({length:n},(_,j)=>l.sets?.[j]||{load:Array.isArray(ex[3])?ex[3][j]??'':ex[3],reps:target(ex,j+1),rpe:'',pain:'',done:false});return `<article class="card exercise ${l.done?'done':''}"><div class="exerciseHead"><div><h3>${esc(ex[0])}</h3><div class="eng">${esc(ex[1])}</div><div class="focus"><b>Principal foco:</b> ${esc(ex[2])}</div></div><div class="ref">Registo: ${esc(refText(ex[3]))}</div></div><div class="sets">${sets.map((s,j)=>`<div class="set"><div class="setno">${j+1}</div><div class="field"><label>Carga</label><input inputmode="decimal" value="${esc(s.load)}" onchange="setSet(${i},${j},'load',this.value)" /></div><div class="field"><label>Reps</label><input inputmode="numeric" value="${esc(s.reps)}" onchange="setSet(${i},${j},'reps',this.value)" /></div><div class="field"><label>RPE / Dor</label><input placeholder="RPE / dor" value="${esc(s.rpe||'')}${s.pain!==undefined&&s.pain!==''?' / '+esc(s.pain):''}" onchange="setCombined(${i},${j},this.value)" /></div><button class="mini ${s.done?'done':''}" onclick="toggleSet(${i},${j})">✓</button></div>`).join('')}</div><div class="actions"><button class="secondary" onclick="startRest(${getRest(ex)})">⏱ ${getRest(ex)}s</button><a class="primary" style="text-decoration:none;padding:11px 14px;border-radius:13px;font-weight:800" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex[1]+' exercise technique')}">Vídeo</a><button class="secondary" onclick="toggleExercise(${i})">${l.done?'Desmarcar':'Marcar exercício concluído'}</button></div><div class="note"><textarea placeholder="Observações" onchange="setLog(${i},'notes',this.value)">${esc(l.notes||'')}</textarea></div><div class="progress">${progressMessage(ex,l)}</div></article>`}
+function getRest(ex){return ex[0].toLowerCase().includes('peso morto')||ex[0].toLowerCase().includes('agachamento')||ex[0].toLowerCase().includes('prensa')?180:90}
+function setSet(i,j,f,v){let k=key(state.day,i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j][f]=v;state.logs[k]=l;save()}
+function setCombined(i,j,v){let p=v.split('/').map(x=>x.trim()),k=key(state.day,i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j].rpe=p[0]||'';l.sets[j].pain=p[1]||'';state.logs[k]=l;save()}
+function toggleSet(i,j){let k=key(state.day,i),l=state.logs[k]||{};l.sets=l.sets||[];l.sets[j]=l.sets[j]||{};l.sets[j].done=!l.sets[j].done;state.logs[k]=l;save();render()}
+function toggleExercise(i){let k=key(state.day,i),l=state.logs[k]||{};l.done=!l.done;state.logs[k]=l;save();render()}
+function setLog(i,f,v){let k=key(state.day,i),l=state.logs[k]||{};l[f]=v;state.logs[k]=l;save()}
+function progressMessage(ex,l){let sets=l.sets||[];let valid=sets.filter(s=>s.done&&s.reps!==''),rpes=valid.map(s=>Number(s.rpe)).filter(Boolean),pains=valid.map(s=>Number(s.pain)).filter(Boolean);if(!valid.length)return 'Progressão: regista as séries realizadas para obter uma recomendação.';if(pains.some(x=>x>=6))return '⚠ Dor ≥6/10 registada: interromper o exercício e avaliar antes de continuar.';if(pains.some(x=>x>=4))return '⚠ Dor 4–5/10: não aumentar a carga; considerar reduzir carga/amplitude.';if(rpes.some(x=>x>8))return 'Progressão: manter a carga e consolidar técnica.';return 'Progressão: histórico registado. Aumentar apenas quando a amplitude, controlo e técnica se mantiverem.'}
+function startRest(sec){if(timer)clearInterval(timer);remaining=sec;alert('Descanso iniciado: '+sec+' segundos. O temporizador continuará enquanto navegas na sessão.');timer=setInterval(()=>{remaining--;if(remaining<=0){clearInterval(timer);timer=null;alert('Descanso terminado.');}},1000)}
+function changeDay(d){state.day=d;save();tab='Treino';render()}
+function changePlan6Day(d){state.day=d;save();tab='Treino 6×';render()}function clearDay(){if(confirm(tab==='Treino 6×'?'Limpar os registos do Treino ATIVO 6× deste dia?':'Limpar os registos do Registo original deste dia?')){let prefix=tab==='Treino 6×'?'p6-'+state.day+'-':state.day+'-';Object.keys(state.logs).filter(k=>k.startsWith(prefix)).forEach(k=>delete state.logs[k]);save();render()}}
+function finishWorkout(){if(tab==='Treino 6×'){let d=PLAN6[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Treino ATIVO 6×',label:d.label,items:d.items.map((e,i)=>({name:e[0],log:state.logs['p6-'+key(state.day,i)]||{}}))});}else{let d=DAYS[state.day];state.history.unshift({date:new Date().toLocaleString('pt-PT'),day:state.day,type:'Registo original',items:d.items.map((e,i)=>({name:e[0],log:state.logs[key(state.day,i)]||{}}))});}state.history=state.history.slice(0,100);save();alert('Treino guardado no histórico.');render()}
+function library(){let q='';return `<section class="panel"><div class="sectionTitle"><div><h2>Biblioteca</h2><div class="muted">Todos os exercícios registados no documento.</div></div></div><input class="search" id="libSearch" placeholder="Pesquisar exercício, músculo ou nome técnico" oninput="filterLibrary(this.value)"><div id="libList" class="libraryGrid">${allExercises().map(x=>`<div class="libraryItem" data-text="${esc((x[0]+' '+x[1]+' '+x[2]).toLowerCase())}"><b>${esc(x[0])}</b><div class="muted">${esc(x[1])}</div><div style="margin-top:5px;font-size:12px">${esc(x[2])}</div></div>`).join('')}</div></section>`}
+function filterLibrary(q){let z=q.toLowerCase();document.querySelectorAll('.libraryItem').forEach(x=>x.style.display=x.dataset.text.includes(z)?'block':'none')}
+function allExercises(){return Object.values(DAYS).flatMap(d=>d.items)}
+function body(){let b=state.body[state.body.length-1]||{};return `<section class="panel"><h2>Corpo</h2><div class="muted">Registo corporal para acompanhar evolução.</div><div class="grid" style="grid-template-columns:repeat(2,1fr)"><div class="field"><label>Peso (kg)</label><input id="bw" value="${esc(b.weight||'')}"></div><div class="field"><label>Cintura (cm)</label><input id="waist" value="${esc(b.waist||'')}"></div><div class="field"><label>Peito (cm)</label><input id="chest" value="${esc(b.chest||'')}"></div><div class="field"><label>Braço (cm)</label><input id="arm" value="${esc(b.arm||'')}"></div></div><button class="primary" onclick="saveBody()">Guardar registo</button></section><section class="panel"><h2>Registos recentes</h2>${state.body.length?state.body.slice(-10).reverse().map(x=>`<div class="historyItem"><b>${esc(x.date)}</b><div class="muted">Peso ${esc(x.weight||'—')} kg · Cintura ${esc(x.waist||'—')} cm · Peito ${esc(x.chest||'—')} cm · Braço ${esc(x.arm||'—')} cm</div></div>`).join(''):'<div class="empty">Ainda não existem registos.</div>'}</section>`}
+function saveBody(){state.body.push({date:new Date().toLocaleString('pt-PT'),weight:document.getElementById('bw').value,waist:document.getElementById('waist').value,chest:document.getElementById('chest').value,arm:document.getElementById('arm').value});save();render()}
+function history(){return `<section class="panel"><h2>Histórico</h2><div class="muted">Sessões guardadas nesta APP.</div>${state.history.length?state.history.map((x,i)=>`<div class="historyItem"><b>${esc(x.day)} — ${esc(x.date)}</b><div class="muted">${x.items.length} exercícios registados</div></div>`).join(''):'<div class="empty">Ainda não existem treinos guardados.</div>'}</section>`}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+render();
+
+</script></body></html>
